@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "RRSM - CodeFest",
+    "slug": "rrsm-codefest",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "rrsm-codefest",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
