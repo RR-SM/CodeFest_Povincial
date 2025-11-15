@@ -9,7 +9,9 @@ export default function Home() {
         alignItems: "center",
       }}
     >
-      <Text>Yo im Saksham</Text>
+      <Text>Yo im Saksham
+        misan pokharel
+      </Text>
     </View>
   );
 }
