@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
-        source={require("@/assets/images/bg.png")}
+        source={require("@/assets/images/bg1.jpeg")}
         style={{
           flex: 1,
           paddingTop: 100,
