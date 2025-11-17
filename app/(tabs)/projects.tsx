@@ -1,7 +1,8 @@
-import React from "react";
-import { Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
+import React, { useMemo, useRef, useState } from "react";
+import { ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import "../globals.css";
 
 interface ProjectCardProps {
@@ -14,8 +15,11 @@ interface ProjectCardProps {
   startDate: string;
   Department: string;
   endDate: string;
+  image: string;
   onPress: () => void;
 }
+
+type Project = Omit<ProjectCardProps, "onPress"> & { id: number };
 
 const ProjectCard = ({
   title,
@@ -27,6 +31,7 @@ const ProjectCard = ({
   startDate,
   endDate,
   Department,
+  image,
   onPress,
 }: ProjectCardProps) => {
   const getPhysicalColor = (value: number) => {
@@ -40,17 +45,29 @@ const ProjectCard = ({
     <TouchableOpacity
       onPress={onPress}
       style={{
-        backgroundColor: "#FFFFFF",
-        borderRadius: 16,
-        padding: 20,
+        borderRadius: 20,
         marginBottom: 16,
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.08,
-        shadowRadius: 8,
-        elevation: 4,
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.12,
+        shadowRadius: 16,
+        elevation: 6,
       }}
     >
+      <ImageBackground
+        source={{ uri: image }}
+        imageStyle={{ borderRadius: 20 }}
+        style={{
+          overflow: "hidden",
+          borderRadius: 20,
+        }}
+      >
+        <LinearGradient
+          colors={["rgba(255,255,255,0.15)", "rgba(255,255,255,0.75)", "#FFFFFF"]}
+          start={{ x: 1, y: 0 }}
+          end={{ x: 0, y: 0 }}
+          style={{ padding: 20 }}
+        >
       {/* Project Title */}
       <Text
         style={{
@@ -132,15 +149,17 @@ const ProjectCard = ({
       {/* Financial Progress */}
 
 
-      {/* View Details */}
-      <View
-        style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end", marginTop: 12 }}
-      >
-        <Text style={{ fontSize: 14, color: "#1E6FD9", fontWeight: "600", marginRight: 4 }}>
-          View Details
-        </Text>
-        <Ionicons name="arrow-forward" size={18} color="#1E6FD9" />
-      </View>
+          {/* View Details */}
+          <View
+            style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end", marginTop: 12 }}
+          >
+            <Text style={{ fontSize: 14, color: "#1E6FD9", fontWeight: "600", marginRight: 4 }}>
+              View Details
+            </Text>
+            <Ionicons name="arrow-forward" size={18} color="#1E6FD9" />
+          </View>
+        </LinearGradient>
+      </ImageBackground>
     </TouchableOpacity>
   );
 };
@@ -148,110 +167,101 @@ const ProjectCard = ({
 export default function Projects() {
   const router = useRouter();
 
-  const projects = [
-    {
-      id: 1,
-      title: "Kathmandu-Terai Fast Track",
-      estimatedBudget: "Rs. 211.93 Billion",
-      allocatedBudget: "Rs. 22.55 Billion",
-      spentBudget: "Rs. 8.07 Billion",
-      physicalProgress: 43.6,
-      financialProgress: 44.72,
-      startDate: "May 14, 2021",
-      endDate: "April 2027",
-      Department: "The Nepali Army"
-    },
-    {
-      id: 2,
-      title: "Melamchi Water Supply Project",
-      estimatedBudget: "$464 Million",
-      allocatedBudget: "Rs. 5.81 Billion",
-      spentBudget: "Rs. 5.0 Billion +",
-      physicalProgress: 100,
-      financialProgress: 74,
-      startDate: "Nov 1998",
-      endDate: "April 2021",
-      Department: "Melamchi Water Supply Development Board (MWSDB)"
-    },
-    {
-      id: 3,
-      title: "Pokhara International Airport",
-      estimatedBudget: "US$180 Million",
-      allocatedBudget: "US$215.96 Million",
-      spentBudget: "Rs 26.5 Billion.",
-      physicalProgress: 100,
-      financialProgress: 53.2,
-      startDate: "Apr 2016",
-      endDate: "March 2022",
-      Department: "Civil Aviation Authority of Nepal (CAAN) "
-    },
-    {
-      id: 4,
-      title: "Pokhara International Airport",
-      estimatedBudget: "US$180 Million",
-      allocatedBudget: "US$215.96 Million",
-      spentBudget: "Rs 26.5 Billion.",
-      physicalProgress: 100,
-      financialProgress: 53.2,
-      startDate: "Apr 2016",
-      endDate: "March 2022",
-      Department: "Civil Aviation Authority of Nepal (CAAN) "
-    },
-    {
-      id: 5,
-      title: "Pokhara International Airport",
-      estimatedBudget: "US$180 Million",
-      allocatedBudget: "US$215.96 Million",
-      spentBudget: "Rs 26.5 Billion.",
-      physicalProgress: 100,
-      financialProgress: 53.2,
-      startDate: "Apr 2016",
-      endDate: "March 2022",
-      Department: "Civil Aviation Authority of Nepal (CAAN) "
-    },
-    {
-      id: 6,
-      title: "Pokhara International Airport",
-      estimatedBudget: "US$180 Million",
-      allocatedBudget: "US$215.96 Million",
-      spentBudget: "Rs 26.5 Billion.",
-      physicalProgress: 100,
-      financialProgress: 53.2,
-      startDate: "Apr 2016",
-      endDate: "March 2022",
-      Department: "Civil Aviation Authority of Nepal (CAAN) "
-    },
-    {
-      id: 7,
-      title: "Pokhara International Airport",
-      estimatedBudget: "US$180 Million",
-      allocatedBudget: "US$215.96 Million",
-      spentBudget: "Rs 26.5 Billion.",
-      physicalProgress: 100,
-      financialProgress: 53.2,
-      startDate: "Apr 2016",
-      endDate: "March 2022",
-      Department: "Civil Aviation Authority of Nepal (CAAN) "
-    },
-    {
-      id: 8,
-      title: "Pokhara International Airport",
-      estimatedBudget: "US$180 Million",
-      allocatedBudget: "US$215.96 Million",
-      spentBudget: "Rs 26.5 Billion.",
-      physicalProgress: 100,
-      financialProgress: 53.2,
-      startDate: "Apr 2016",
-      endDate: "March 2022",
-      Department: "Civil Aviation Authority of Nepal (CAAN) "
-    },
-  ];
+  const projects = useMemo<Project[]>(
+    () => [
+      {
+        id: 1,
+        title: "Kathmandu-Terai Fast Track",
+        estimatedBudget: "Rs. 211.93 Billion",
+        allocatedBudget: "Rs. 22.55 Billion",
+        spentBudget: "Rs. 8.07 Billion",
+        physicalProgress: 43.6,
+        financialProgress: 44.72,
+        startDate: "May 14, 2021",
+        endDate: "April 2027",
+        Department: "The Nepali Army",
+        image: "https://republicaimg.nagariknewscdn.com/shared/web/uploads/media/z8syEGP59L1KkOGpeBwbEdVToIiCO00Utel0nUlM.jpg",
+      },
+      {
+        id: 2,
+        title: "Melamchi Water Supply Project",
+        estimatedBudget: "$464 Million",
+        allocatedBudget: "Rs. 5.81 Billion",
+        spentBudget: "Rs. 5.0 Billion +",
+        physicalProgress: 100,
+        financialProgress: 74,
+        startDate: "Nov 1998",
+        endDate: "April 2021",
+        Department: "Melamchi Water Supply Development Board (MWSDB)",
+        image:
+          "https://imgs.search.brave.com/3Nyj3La35t5x8QDqtV-AfGAPSuuA04Lh_vdNCSohVeg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMtYXBpLmthdGht/YW5kdXBvc3QuY29t/L3RodW1iLnBocD9z/cmM9aHR0cHM6Ly9h/c3NldHMtY2RuLmth/dGhtYW5kdXBvc3Qu/Y29tL3VwbG9hZHMv/c291cmNlL25ld3Mv/MjAyMi9uZXdzL21l/bGFtY2hpLTE2NzA2/Mzk0MTUucG5nJnc9/OTAwJmhlaWdodD02/MDE",
+      },
+      {
+        id: 3,
+        title: "Pokhara International Airport",
+        estimatedBudget: "US$180 Million",
+        allocatedBudget: "US$215.96 Million",
+        spentBudget: "Rs 26.5 Billion.",
+        physicalProgress: 100,
+        financialProgress: 53.2,
+        startDate: "Apr 2016",
+        endDate: "March 2022",
+        Department: "Civil Aviation Authority of Nepal (CAAN) ",
+        image: "https://imgs.search.brave.com/yJENKCqV8QX7dHaXZe7A-VSyJXIYC8LMkCi8jSh9IqY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/aS1zY21wLmNvbS9z/aXRlcy9kZWZhdWx0/L2ZpbGVzL3N0eWxl/cy8xMDIweDY4MC9w/dWJsaWMvZDgvaW1h/Z2VzL2NhbnZhcy8y/MDI1LzAzLzA3L2Vk/MzA4Y2Q3LTA0ZWQt/NGIzZC1iNzlmLTM5/MGUyNDljY2Y5OV82/MWI2ZjQ3OS5qcGc_/aXRvaz1veTBIZFg3/byZ2PTE3NDEzNDY3/NDg",
+      },
+      {
+        id: 4,
+        title: "Koshi River Bridge Modernization",
+        estimatedBudget: "Rs. 15 Billion",
+        allocatedBudget: "Rs. 9.2 Billion",
+        spentBudget: "Rs. 4.7 Billion",
+        physicalProgress: 61,
+        financialProgress: 49,
+        startDate: "Jan 2022",
+        endDate: "Dec 2025",
+        Department: "Department of Roads",
+        image: "https://imgs.search.brave.com/sZN7wfeTS5S-6r36_yIREXQlVXSNHomqxrP8JABZtiQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/czN3YWFzLmdvdi5p/bi9zMzY3ZjdmYjg3/M2VhZjI5NTI2YTEx/YTliN2FjMzNiZmFj/L3VwbG9hZHMvYmZp/X3RodW1iLzIwMTgw/MzEyNTQtb2x3OTg4/bHdiYmZha256dnAx/MzFhMmI2MTJ2cDZh/NG54N3VxZzBuaDU2/LmpwZw",
+      },
+    ],
+    []
+  );
 
-  const handleProjectPress = (project: typeof projects[0]) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearchBar, setShowSearchBar] = useState(true);
+  const lastScrollOffset = useRef(0);
+
+  const filteredProjects = useMemo(() => {
+    const value = searchQuery.trim().toLowerCase();
+    if (!value) return projects;
+    return projects.filter((project) => project.title.toLowerCase().includes(value));
+  }, [projects, searchQuery]);
+
+  const suggestions = useMemo(() => {
+    const value = searchQuery.trim().toLowerCase();
+    if (!value) return [];
+    return projects.filter((project) => project.title.toLowerCase().includes(value)).slice(0, 5);
+  }, [projects, searchQuery]);
+
+  const handleProjectPress = (project: Project) => {
     router.push({
       pathname: "/project-details",
       params: { ...project },
     });
+  };
+
+  const handleScroll = (event: any) => {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    const diff = currentOffset - lastScrollOffset.current;
+
+    if (searchQuery.length > 0 || currentOffset < 30) {
+      if (!showSearchBar) setShowSearchBar(true);
+    } else if (diff > 10 && currentOffset > 30) {
+      if (showSearchBar) setShowSearchBar(false);
+    } else if (diff < -10) {
+      if (!showSearchBar) setShowSearchBar(true);
+    }
+
+    lastScrollOffset.current = currentOffset;
   };
 
   return (
@@ -261,7 +271,7 @@ export default function Projects() {
         style={{
           backgroundColor: "#0F0D23",
           paddingTop: 60,
-          paddingBottom: 24,
+          paddingBottom: 28,
           paddingHorizontal: 20,
         }}
       >
@@ -273,12 +283,92 @@ export default function Projects() {
         </Text>
       </View>
 
+      {showSearchBar && (
+        <View style={{ paddingHorizontal: 20, paddingBottom: 12, paddingTop: 16, backgroundColor: "#F8F9FA" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: "#FFFFFF",
+              borderRadius: 14,
+              paddingHorizontal: 16,
+              paddingVertical: 10,
+              elevation: 3,
+              shadowColor: "#000",
+              shadowOpacity: 0.08,
+              shadowRadius: 10,
+              shadowOffset: { width: 0, height: 4 },
+            }}
+          >
+            <Ionicons name="search" size={20} color="#6B7280" />
+            <TextInput
+              placeholder="Search projects by name..."
+              placeholderTextColor="#9CA3AF"
+              style={{
+                flex: 1,
+                marginLeft: 10,
+                color: "#111827",
+                fontSize: 15,
+                paddingVertical: 6,
+              }}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              autoCorrect={false}
+              autoCapitalize="none"
+            />
+            {searchQuery.length > 0 && (
+              <TouchableOpacity onPress={() => setSearchQuery("")}>
+                <Ionicons name="close-circle" size={20} color="#9CA3AF" />
+              </TouchableOpacity>
+            )}
+          </View>
+
+          {searchQuery.length > 0 && (
+            <View
+              style={{
+                backgroundColor: "#FFFFFF",
+                borderRadius: 12,
+                marginTop: 10,
+                paddingVertical: 8,
+                paddingHorizontal: 12,
+                elevation: 2,
+                shadowColor: "#000",
+                shadowOpacity: 0.08,
+                shadowRadius: 8,
+                shadowOffset: { width: 0, height: 2 },
+              }}
+            >
+              {suggestions.length > 0 ? (
+                suggestions.map((suggestion, index) => (
+                  <TouchableOpacity
+                    key={suggestion.id}
+                    style={{
+                      paddingVertical: 6,
+                      borderBottomWidth: index === suggestions.length - 1 ? 0 : StyleSheet.hairlineWidth,
+                      borderBottomColor: "#E5E7EB",
+                    }}
+                    onPress={() => setSearchQuery(suggestion.title)}
+                  >
+                    <Text style={{ color: "#0F172A", fontSize: 14 }}>{suggestion.title}</Text>
+                  </TouchableOpacity>
+                ))
+              ) : (
+                <Text style={{ color: "#6B7280", fontSize: 13 }}>No matching projects yet.</Text>
+              )}
+            </View>
+          )}
+        </View>
+      )}
+
       {/* Project Cards */}
       <ScrollView
         style={{ flex: 1 }}
-        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 24, paddingBottom: 100 }}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: showSearchBar ? 0 : 16, paddingBottom: 100 }}
+        showsVerticalScrollIndicator={false}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
       >
-        {projects.map((project) => (
+        {filteredProjects.map((project) => (
           <ProjectCard
             key={project.id}
             title={project.title}
@@ -290,6 +380,7 @@ export default function Projects() {
             startDate={project.startDate}
             endDate={project.endDate}
             Department={project.Department}
+            image={project.image}
             onPress={() => handleProjectPress(project)}
           />
         ))}
