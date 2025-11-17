@@ -205,7 +205,7 @@ export default function Home() {
               <View style={{ alignItems: "flex-end" }}>
                 <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>End Date</Text>
                 <Text style={{ fontSize: 14, fontWeight: "600", color: "#333" }}>
-                  Dec 2025
+                  April 2027
                 </Text>
               </View>
             </View>
