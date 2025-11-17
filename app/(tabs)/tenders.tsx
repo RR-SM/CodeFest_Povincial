@@ -56,6 +56,24 @@ const Tenders = () => {
       physicalProgress: '12',
       financialProgress: '8',
     },
+    {
+      id: 'kathmandu-metro',
+      title: 'Kathmandu Valley Metro Feasibility PPP',
+      description: '42km elevated metro with smart stations and automated ticketing',
+      authority: 'Investment Board Nepal',
+      status: 'Planning',
+      budgetDisplay: 'NPR 8.40B',
+      contractDisplay: 'NPR 1.10B (Phase I)',
+      contractValue: 1.1,
+      spentBudget: 'NPR 0.18B',
+      biddingCompanies: ['TransNepal Metro JV', 'Kathmandu Mobility Group', 'SE Asia Rail Holdings'],
+      winningCompany: null,
+      deadline: '08/30/2025',
+      startDate: '9/1/2025',
+      endDate: '12/31/2029',
+      physicalProgress: '4',
+      financialProgress: '3',
+    },
   ]
 
   const router = useRouter()
@@ -349,7 +367,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 20,
     paddingTop: 24,
-    paddingBottom: 32,
+    paddingBottom: 100,
   },
   searchRow: {
     flexDirection: 'row',

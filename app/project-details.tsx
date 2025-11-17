@@ -1,10 +1,18 @@
 import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React from "react";
-import { ScrollView, Text, TouchableOpacity, View, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
 import "./globals.css";
+
+type Comment = {
+  id: string;
+  author: string;
+  text: string;
+  timestamp: Date;
+};
 
 export default function ProjectDetails() {
   const router = useRouter();
@@ -49,6 +57,98 @@ export default function ProjectDetails() {
     if (value >= 50) return "#8E24AA";
     return "#CE93D8";
   };
+
+  const [commentInput, setCommentInput] = useState("");
+  const [comments, setComments] = useState<Comment[]>([
+    {
+      id: "1",
+      author: "Suman T.",
+      text: "Impressive progress so far. Hoping they maintain transparency on the remaining budget!",
+      timestamp: new Date(),
+    },
+    {
+      id: "2",
+      author: "Riya P.",
+      text: "Visited the site last month – the local workforce seemed motivated.",
+      timestamp: new Date(),
+    },
+  ]);
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [isPicking, setIsPicking] = useState(false);
+
+  const handleAddComment = () => {
+    const trimmed = commentInput.trim();
+    if (!trimmed) return;
+    const newComment: Comment = {
+      id: Date.now().toString(),
+      author: "You",
+      text: trimmed,
+      timestamp: new Date(),
+    };
+    setComments((prev) => [newComment, ...prev]);
+    setCommentInput("");
+  };
+
+  const handlePickPhoto = async () => {
+    if (isPicking) return;
+    setIsPicking(true);
+    try {
+      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permission.granted) {
+        alert("Media library permission is required to upload photos.");
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.6,
+        allowsMultipleSelection: false,
+      });
+      if (!result.canceled && result.assets?.length) {
+        setPhotos((prev) => [result.assets[0].uri, ...prev]);
+      }
+    } finally {
+      setIsPicking(false);
+    }
+  };
+
+  const readableDate = (date: Date) =>
+    new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(date);
+
+  const CommentCard = ({ comment }: { comment: Comment }) => (
+    <View
+      style={{
+        backgroundColor: "#F5F7FB",
+        borderRadius: 14,
+        padding: 12,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: "#E5E7EB",
+      }}
+    >
+      <Text style={{ fontWeight: "600", color: "#0F172A", marginBottom: 4 }}>{comment.author}</Text>
+      <Text style={{ color: "#4B5563", lineHeight: 20, marginBottom: 6 }}>{comment.text}</Text>
+      <Text style={{ fontSize: 12, color: "#9CA3AF" }}>{readableDate(comment.timestamp)}</Text>
+    </View>
+  );
+
+  const PhotoGrid = () => (
+    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+      {photos.map((uri) => (
+        <Image
+          key={uri}
+          source={{ uri }}
+          style={{
+            width: "30%",
+            aspectRatio: 1,
+            borderRadius: 12,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: "#E5E7EB",
+          }}
+        />
+      ))}
+    </View>
+  );
 
   return (
     <View style={{ flex: 1, backgroundColor: "#F8F9FA" }}>
@@ -292,6 +392,119 @@ export default function ProjectDetails() {
               construction of roads, bridges, and related facilities.
             </Text>
           </View>
+        </View>
+
+        {/* Community Comments */}
+        <View
+          style={{
+            backgroundColor: "#FFFFFF",
+            borderRadius: 16,
+            padding: 20,
+            marginBottom: 16,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.08,
+            shadowRadius: 8,
+            elevation: 4,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+            <Ionicons name="chatbubble-ellipses" size={20} color="#1E6FD9" />
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: "#1a1a1a", marginLeft: 8 }}>
+              Community Feedback
+            </Text>
+          </View>
+
+          <TextInput
+            placeholder="Share updates, concerns, or appreciation…"
+            placeholderTextColor="#9CA3AF"
+            multiline
+            value={commentInput}
+            onChangeText={setCommentInput}
+            style={{
+              borderWidth: 1,
+              borderColor: "#E5E7EB",
+              borderRadius: 14,
+              padding: 12,
+              fontSize: 14,
+              color: "#111827",
+              marginBottom: 10,
+              minHeight: 80,
+              textAlignVertical: "top",
+            }}
+          />
+
+          <TouchableOpacity
+            onPress={handleAddComment}
+            disabled={!commentInput.trim().length}
+            style={{
+              alignSelf: "flex-end",
+              backgroundColor: commentInput.trim() ? "#1E6FD9" : "#9CA3AF",
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              borderRadius: 999,
+            }}
+          >
+            <Text style={{ color: "#FFFFFF", fontWeight: "600" }}>Post Comment</Text>
+          </TouchableOpacity>
+
+          <View style={{ marginTop: 18 }}>
+            {comments.map((comment) => (
+              <CommentCard key={comment.id} comment={comment} />
+            ))}
+          </View>
+        </View>
+
+        {/* Photo Uploads */}
+        <View
+          style={{
+            backgroundColor: "#FFFFFF",
+            borderRadius: 16,
+            padding: 20,
+            marginBottom: 32,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.08,
+            shadowRadius: 8,
+            elevation: 4,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+            <Ionicons name="camera" size={20} color="#1E6FD9" />
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: "#1a1a1a", marginLeft: 8 }}>
+              Field Photos
+            </Text>
+          </View>
+
+          <TouchableOpacity
+            onPress={handlePickPhoto}
+            disabled={isPicking}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: "#CBD5F5",
+              borderStyle: "dashed",
+              borderRadius: 16,
+              paddingVertical: 18,
+              marginBottom: 16,
+              backgroundColor: "#F8FAFF",
+            }}
+          >
+            <Ionicons name="cloud-upload" size={22} color="#1E6FD9" />
+            <Text style={{ marginLeft: 10, color: "#1E6FD9", fontWeight: "600" }}>
+              {isPicking ? "Opening gallery…" : "Upload progress photo"}
+            </Text>
+          </TouchableOpacity>
+
+          {photos.length === 0 ? (
+            <Text style={{ color: "#6B7280", fontSize: 14 }}>
+              No community photos yet. Be the first to share on-site progress snaps.
+            </Text>
+          ) : (
+            <PhotoGrid />
+          )}
         </View>
       </ScrollView>
     </View>
