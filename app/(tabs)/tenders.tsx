@@ -1,5 +1,6 @@
+import { Ionicons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import React from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import {
   ScrollView,
   StyleSheet,
@@ -59,9 +60,25 @@ const Tenders = () => {
 
   const router = useRouter()
 
-  const openCount = tenders.filter((tender) => tender.status === 'Open').length
-  const awardedCount = tenders.filter((tender) => tender.status === 'Awarded').length
-  const totalContractValue = tenders.reduce((sum, tender) => sum + tender.contractValue, 0)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [showSearchBar, setShowSearchBar] = useState(true)
+  const lastScrollOffset = useRef(0)
+
+  const filteredTenders = useMemo(() => {
+    const value = searchQuery.trim().toLowerCase()
+    if (!value) return tenders
+    return tenders.filter((tender) => tender.title.toLowerCase().includes(value))
+  }, [tenders, searchQuery])
+
+  const suggestions = useMemo(() => {
+    const value = searchQuery.trim().toLowerCase()
+    if (!value) return []
+    return tenders.filter((tender) => tender.title.toLowerCase().includes(value)).slice(0, 5)
+  }, [tenders, searchQuery])
+
+  const openCount = filteredTenders.filter((tender) => tender.status === 'Open').length
+  const awardedCount = filteredTenders.filter((tender) => tender.status === 'Awarded').length
+  const totalContractValue = filteredTenders.reduce((sum, tender) => sum + tender.contractValue, 0)
   const totalValueDisplay = `NPR ${totalContractValue.toFixed(2)}B`
 
   const handleViewProject = (tender: (typeof tenders)[0]) => {
@@ -82,6 +99,21 @@ const Tenders = () => {
     })
   }
 
+  const handleScroll = (event: any) => {
+    const currentOffset = event.nativeEvent.contentOffset.y
+    const diff = currentOffset - lastScrollOffset.current
+
+    if (searchQuery.length > 0 || currentOffset < 30) {
+      if (!showSearchBar) setShowSearchBar(true)
+    } else if (diff > 10 && currentOffset > 30) {
+      if (showSearchBar) setShowSearchBar(false)
+    } else if (diff < -10) {
+      if (!showSearchBar) setShowSearchBar(true)
+    }
+
+    lastScrollOffset.current = currentOffset
+  }
+
   return (
     <View style={styles.screen}>
       {/* Header (match Projects screen style) */}
@@ -92,20 +124,90 @@ const Tenders = () => {
         </Text>
       </View>
 
-      {/* Body */}
-      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-        {/* Search */}
-        <View style={styles.searchRow}>
-          <TextInput
-            placeholder="Search tenders by title, authority, or company..."
-            placeholderTextColor="#8E9BB3"
-            style={styles.searchInput}
-          />
-          <TouchableOpacity style={styles.searchButton}>
-            <Text style={styles.searchButtonText}>Search</Text>
-          </TouchableOpacity>
-        </View>
+      {showSearchBar && (
+        <View style={{ paddingHorizontal: 20, paddingBottom: 12, paddingTop: 16, backgroundColor: '#F8F9FA' }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: '#FFFFFF',
+              borderRadius: 14,
+              paddingHorizontal: 16,
+              paddingVertical: 10,
+              elevation: 3,
+              shadowColor: '#000',
+              shadowOpacity: 0.08,
+              shadowRadius: 10,
+              shadowOffset: { width: 0, height: 4 },
+            }}
+          >
+            <Ionicons name="search" size={20} color="#6B7280" />
+            <TextInput
+              placeholder="Search tenders by name..."
+              placeholderTextColor="#9CA3AF"
+              style={{
+                flex: 1,
+                marginLeft: 10,
+                color: '#111827',
+                fontSize: 15,
+                paddingVertical: 6,
+              }}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              autoCorrect={false}
+              autoCapitalize="none"
+            />
+            {searchQuery.length > 0 && (
+              <TouchableOpacity onPress={() => setSearchQuery('')}>
+                <Ionicons name="close-circle" size={20} color="#9CA3AF" />
+              </TouchableOpacity>
+            )}
+          </View>
 
+          {searchQuery.length > 0 && (
+            <View
+              style={{
+                backgroundColor: '#FFFFFF',
+                borderRadius: 12,
+                marginTop: 10,
+                paddingVertical: 8,
+                paddingHorizontal: 12,
+                elevation: 2,
+                shadowColor: '#000',
+                shadowOpacity: 0.08,
+                shadowRadius: 8,
+                shadowOffset: { width: 0, height: 2 },
+              }}
+            >
+              {suggestions.length > 0 ? (
+                suggestions.map((suggestion, index) => (
+                  <TouchableOpacity
+                    key={suggestion.id}
+                    style={{
+                      paddingVertical: 6,
+                      borderBottomWidth: index === suggestions.length - 1 ? 0 : StyleSheet.hairlineWidth,
+                      borderBottomColor: '#E5E7EB',
+                    }}
+                    onPress={() => setSearchQuery(suggestion.title)}
+                  >
+                    <Text style={{ color: '#0F172A', fontSize: 14 }}>{suggestion.title}</Text>
+                  </TouchableOpacity>
+                ))
+              ) : (
+                <Text style={{ color: '#6B7280', fontSize: 13 }}>No matching tenders yet.</Text>
+              )}
+            </View>
+          )}
+        </View>
+      )}
+
+      {/* Body */}
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={[styles.content, { paddingTop: showSearchBar ? 0 : 16 }]}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
         {/* Stats */}
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
@@ -123,7 +225,7 @@ const Tenders = () => {
         </View>
 
         {/* Tender cards */}
-        {tenders.map((tender) => (
+        {filteredTenders.map((tender) => (
           <View key={tender.id} style={styles.card}>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>{tender.title}</Text>
