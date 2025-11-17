@@ -10,138 +10,148 @@ import {
 
 const Tenders = () => {
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Tender Tracking</Text>
-        <Text style={styles.subtitle}>
+    <View style={styles.screen}>
+      {/* Header (match Projects screen style) */}
+      <View style={styles.headerBar}>
+        <Text style={styles.headerTitle}>Tender Tracking</Text>
+        <Text style={styles.headerSubtitle}>
           Monitor all government tenders with AI-powered anomaly detection
         </Text>
       </View>
 
-      {/* Search */}
-      <View style={styles.searchRow}>
-        <TextInput
-          placeholder="Search tenders by title, authority, or company..."
-          placeholderTextColor="#8E9BB3"
-          style={styles.searchInput}
-        />
-        <TouchableOpacity style={styles.searchButton}>
-          <Text style={styles.searchButtonText}>Search</Text>
-        </TouchableOpacity>
-      </View>
+      {/* Body */}
+      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+        {/* Search */}
+        <View style={styles.searchRow}>
+          <TextInput
+            placeholder="Search tenders by title, authority, or company..."
+            placeholderTextColor="#8E9BB3"
+            style={styles.searchInput}
+          />
+          <TouchableOpacity style={styles.searchButton}>
+            <Text style={styles.searchButtonText}>Search</Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* Stats */}
-      <View style={styles.statsRow}>
-        <View style={styles.statCard}>
-          <Text style={styles.statLabel}>Open Tenders</Text>
-          <Text style={styles.statValue}>1</Text>
-        </View>
-        <View style={styles.statCard}>
-          <Text style={styles.statLabel}>Awarded Tenders</Text>
-          <Text style={[styles.statValue, styles.statPositive]}>2</Text>
-        </View>
-        <View style={styles.statCard}>
-          <Text style={styles.statLabel}>Total Tender Value</Text>
-          <Text style={styles.statValue}>NPR 8.80B</Text>
-        </View>
-      </View>
-
-      {/* Tender card */}
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Text style={styles.cardTitle}>
-            Construction of Kathmandu Ring Road Expansion
-          </Text>
-          <View style={styles.badgeAwarded}>
-            <Text style={styles.badgeAwardedText}>Awarded</Text>
+        {/* Stats */}
+        <View style={styles.statsRow}>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>Open Tenders</Text>
+            <Text style={styles.statValue}>1</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>Awarded Tenders</Text>
+            <Text style={[styles.statValue, styles.statPositive]}>2</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>Total Tender Value</Text>
+            <Text style={styles.statValue}>NPR 8.80B</Text>
           </View>
         </View>
 
-        <Text style={styles.cardSubtitle}>
-          25km road expansion project with 6-lane highway
-        </Text>
-        <Text style={styles.cardMeta}>Department of Roads</Text>
-
-        {/* Budget / Contract */}
-        <View style={styles.rowSpaceBetween}>
-          <View>
-            <Text style={styles.smallLabel}>Budget</Text>
-            <Text style={styles.budgetValue}>NPR 5.00B</Text>
-          </View>
-          <View>
-            <Text style={styles.smallLabel}>Contract</Text>
-            <Text style={styles.contractValue}>NPR 4.80B</Text>
-          </View>
-        </View>
-
-        {/* Bidding companies & winner */}
-        <View style={styles.section}>
-          <Text style={styles.sectionLabel}>Bidding Companies</Text>
-          <View style={styles.chipRow}>
-            <View style={styles.chip}>
-              <Text style={styles.chipText}>Nepal Construction Co.</Text>
-            </View>
-            <View style={styles.chip}>
-              <Text style={styles.chipText}>Himalayan Builders</Text>
-            </View>
-            <View style={styles.chip}>
-              <Text style={styles.chipText}>Everest Infrastructure</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionLabel}>Winning Company</Text>
-          <View style={[styles.chip, styles.winnerChip]}>
-            <Text style={[styles.chipText, styles.winnerChipText]}>
-              Nepal Construction Co.
+        {/* Tender card */}
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardTitle}>
+              Construction of Kathmandu Ring Road Expansion
             </Text>
+            <View style={styles.badgeAwarded}>
+              <Text style={styles.badgeAwardedText}>Awarded</Text>
+            </View>
           </View>
-        </View>
 
-        {/* Footer actions */}
-        <View style={[styles.rowSpaceBetween, styles.footerRow]}>
-          <View>
-            <Text style={styles.deadlineLabel}>Deadline</Text>
-            <Text style={styles.deadlineValue}>12/31/2024</Text>
+          <Text style={styles.cardSubtitle}>
+            25km road expansion project with 6-lane highway
+          </Text>
+          <Text style={styles.cardMeta}>Department of Roads</Text>
+
+          {/* Budget / Contract */}
+          <View style={styles.rowSpaceBetween}>
+            <View>
+              <Text style={styles.smallLabel}>Budget</Text>
+              <Text style={styles.budgetValue}>NPR 5.00B</Text>
+            </View>
+            <View>
+              <Text style={styles.smallLabel}>Contract</Text>
+              <Text style={styles.contractValue}>NPR 4.80B</Text>
+            </View>
           </View>
-          <View style={styles.footerButtons}>
-            <TouchableOpacity style={styles.secondaryButton}>
-              <Text style={styles.secondaryButtonText}>AI Analysis</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryButton}>
-              <Text style={styles.primaryButtonText}>View Project</Text>
-            </TouchableOpacity>
+
+          {/* Bidding companies & winner */}
+          <View style={styles.section}>
+            <Text style={styles.sectionLabel}>Bidding Companies</Text>
+            <View style={styles.chipRow}>
+              <View style={styles.chip}>
+                <Text style={styles.chipText}>Nepal Construction Co.</Text>
+              </View>
+              <View style={styles.chip}>
+                <Text style={styles.chipText}>Himalayan Builders</Text>
+              </View>
+              <View style={styles.chip}>
+                <Text style={styles.chipText}>Everest Infrastructure</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionLabel}>Winning Company</Text>
+            <View style={[styles.chip, styles.winnerChip]}>
+              <Text style={[styles.chipText, styles.winnerChipText]}>
+                Nepal Construction Co.
+              </Text>
+            </View>
+          </View>
+
+          {/* Footer actions */}
+          <View style={[styles.rowSpaceBetween, styles.footerRow]}>
+            <View>
+              <Text style={styles.deadlineLabel}>Deadline</Text>
+              <Text style={styles.deadlineValue}>12/31/2024</Text>
+            </View>
+            <View style={styles.footerButtons}>
+              <TouchableOpacity style={styles.secondaryButton}>
+                <Text style={styles.secondaryButtonText}>AI Analysis</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.primaryButton}>
+                <Text style={styles.primaryButtonText}>View Project</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+  },
+  headerBar: {
+    backgroundColor: '#0F0D23',
+    paddingTop: 60,
+    paddingBottom: 24,
+    paddingHorizontal: 20,
+  },
+  headerTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 8,
+  },
+  headerSubtitle: {
+    fontSize: 15,
+    color: '#B0B0B0',
+  },
   container: {
     flex: 1,
     backgroundColor: '#F5F7FB',
   },
   content: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: 20,
+    paddingTop: 24,
     paddingBottom: 32,
-  },
-  header: {
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#111827',
-  },
-  subtitle: {
-    marginTop: 4,
-    fontSize: 13,
-    color: '#6B7280',
   },
   searchRow: {
     flexDirection: 'row',
