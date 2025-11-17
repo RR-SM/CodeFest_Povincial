@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import React from 'react'
 import {
   ScrollView,
@@ -9,6 +10,78 @@ import {
 } from 'react-native'
 
 const Tenders = () => {
+  const tenders = [
+    {
+      id: 'ring-road',
+      title: 'Construction of Kathmandu Ring Road Expansion',
+      description: '25km road expansion project with 6-lane highway',
+      authority: 'Department of Roads',
+      status: 'Awarded',
+      budgetDisplay: 'NPR 5.00B',
+      contractDisplay: 'NPR 4.80B',
+      contractValue: 4.8,
+      spentBudget: 'NPR 2.20B',
+      biddingCompanies: [
+        'Nepal Construction Co.',
+        'Himalayan Builders',
+        'Everest Infrastructure',
+      ],
+      winningCompany: 'Nepal Construction Co.',
+      deadline: '12/31/2024',
+      startDate: '1/15/2024',
+      endDate: '12/31/2025',
+      physicalProgress: '45',
+      financialProgress: '40',
+    },
+    {
+      id: 'mid-hill',
+      title: 'Mid-Hill Smart Highway PPP Phase II',
+      description: '62km smart highway with adaptive tolling and IoT monitoring',
+      authority: 'Infrastructure Investment Board Nepal',
+      status: 'Open',
+      budgetDisplay: 'NPR 6.10B',
+      contractDisplay: 'NPR 4.00B',
+      contractValue: 4.0,
+      spentBudget: 'NPR 0.65B',
+      biddingCompanies: [
+        'Himalayan Express JV',
+        'Biratnagar Infrastructure',
+        'South Asia Mobility',
+      ],
+      winningCompany: null,
+      deadline: '03/30/2025',
+      startDate: '4/1/2025',
+      endDate: '10/15/2027',
+      physicalProgress: '12',
+      financialProgress: '8',
+    },
+  ]
+
+  const router = useRouter()
+
+  const openCount = tenders.filter((tender) => tender.status === 'Open').length
+  const awardedCount = tenders.filter((tender) => tender.status === 'Awarded').length
+  const totalContractValue = tenders.reduce((sum, tender) => sum + tender.contractValue, 0)
+  const totalValueDisplay = `NPR ${totalContractValue.toFixed(2)}B`
+
+  const handleViewProject = (tender: (typeof tenders)[0]) => {
+    // Navigate to the same project-details screen used by Projects tab
+    router.push({
+      pathname: '/project-details',
+      params: {
+        title: tender.title,
+        estimatedBudget: tender.budgetDisplay,
+        allocatedBudget: tender.contractDisplay,
+        spentBudget: tender.spentBudget,
+        physicalProgress: tender.physicalProgress,
+        financialProgress: tender.financialProgress,
+        startDate: tender.startDate,
+        endDate: tender.endDate,
+        Department: tender.authority,
+      },
+    })
+  }
+
   return (
     <View style={styles.screen}>
       {/* Header (match Projects screen style) */}
@@ -37,87 +110,110 @@ const Tenders = () => {
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
             <Text style={styles.statLabel}>Open Tenders</Text>
-            <Text style={styles.statValue}>1</Text>
+            <Text style={styles.statValue}>{openCount}</Text>
           </View>
           <View style={styles.statCard}>
             <Text style={styles.statLabel}>Awarded Tenders</Text>
-            <Text style={[styles.statValue, styles.statPositive]}>2</Text>
+            <Text style={[styles.statValue, styles.statPositive]}>{awardedCount}</Text>
           </View>
           <View style={styles.statCard}>
             <Text style={styles.statLabel}>Total Tender Value</Text>
-            <Text style={styles.statValue}>NPR 8.80B</Text>
+            <Text style={styles.statValue}>{totalValueDisplay}</Text>
           </View>
         </View>
 
-        {/* Tender card */}
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>
-              Construction of Kathmandu Ring Road Expansion
-            </Text>
-            <View style={styles.badgeAwarded}>
-              <Text style={styles.badgeAwardedText}>Awarded</Text>
-            </View>
-          </View>
-
-          <Text style={styles.cardSubtitle}>
-            25km road expansion project with 6-lane highway
-          </Text>
-          <Text style={styles.cardMeta}>Department of Roads</Text>
-
-          {/* Budget / Contract */}
-          <View style={styles.rowSpaceBetween}>
-            <View>
-              <Text style={styles.smallLabel}>Budget</Text>
-              <Text style={styles.budgetValue}>NPR 5.00B</Text>
-            </View>
-            <View>
-              <Text style={styles.smallLabel}>Contract</Text>
-              <Text style={styles.contractValue}>NPR 4.80B</Text>
-            </View>
-          </View>
-
-          {/* Bidding companies & winner */}
-          <View style={styles.section}>
-            <Text style={styles.sectionLabel}>Bidding Companies</Text>
-            <View style={styles.chipRow}>
-              <View style={styles.chip}>
-                <Text style={styles.chipText}>Nepal Construction Co.</Text>
-              </View>
-              <View style={styles.chip}>
-                <Text style={styles.chipText}>Himalayan Builders</Text>
-              </View>
-              <View style={styles.chip}>
-                <Text style={styles.chipText}>Everest Infrastructure</Text>
+        {/* Tender cards */}
+        {tenders.map((tender) => (
+          <View key={tender.id} style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>{tender.title}</Text>
+              <View
+                style={[
+                  styles.badgeBase,
+                  tender.status === 'Awarded' ? styles.badgeAwarded : styles.badgeOpen,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.badgeText,
+                    tender.status === 'Awarded'
+                      ? styles.badgeAwardedText
+                      : styles.badgeOpenText,
+                  ]}
+                >
+                  {tender.status}
+                </Text>
               </View>
             </View>
-          </View>
 
-          <View style={styles.section}>
-            <Text style={styles.sectionLabel}>Winning Company</Text>
-            <View style={[styles.chip, styles.winnerChip]}>
-              <Text style={[styles.chipText, styles.winnerChipText]}>
-                Nepal Construction Co.
+            <Text style={styles.cardSubtitle}>{tender.description}</Text>
+            <Text style={styles.cardMeta}>{tender.authority}</Text>
+
+            {/* Budget / Contract */}
+            <View style={styles.rowSpaceBetween}>
+              <View>
+                <Text style={styles.smallLabel}>Budget</Text>
+                <Text style={styles.budgetValue}>{tender.budgetDisplay}</Text>
+              </View>
+              <View>
+                <Text style={styles.smallLabel}>Contract</Text>
+                <Text style={styles.contractValue}>{tender.contractDisplay}</Text>
+              </View>
+            </View>
+
+            {/* Bidding companies & winner */}
+            <View style={styles.section}>
+              <Text style={styles.sectionLabel}>Bidding Companies</Text>
+              <View style={styles.chipRow}>
+                {tender.biddingCompanies.map((company) => (
+                  <View key={company} style={styles.chip}>
+                    <Text style={styles.chipText}>{company}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+
+            <View style={styles.section}>
+              <Text style={styles.sectionLabel}>
+                {tender.winningCompany ? 'Winning Company' : 'Award Status'}
               </Text>
+              <View
+                style={[
+                  styles.chip,
+                  tender.winningCompany ? styles.winnerChip : styles.pendingChip,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.chipText,
+                    tender.winningCompany ? styles.winnerChipText : styles.pendingChipText,
+                  ]}
+                >
+                  {tender.winningCompany ?? 'Bids under evaluation'}
+                </Text>
+              </View>
             </View>
-          </View>
 
-          {/* Footer actions */}
-          <View style={[styles.rowSpaceBetween, styles.footerRow]}>
-            <View>
-              <Text style={styles.deadlineLabel}>Deadline</Text>
-              <Text style={styles.deadlineValue}>12/31/2024</Text>
-            </View>
-            <View style={styles.footerButtons}>
-              <TouchableOpacity style={styles.secondaryButton}>
-                <Text style={styles.secondaryButtonText}>AI Analysis</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.primaryButton}>
-                <Text style={styles.primaryButtonText}>View Project</Text>
-              </TouchableOpacity>
+            {/* Footer actions */}
+            <View style={[styles.rowSpaceBetween, styles.footerRow]}>
+              <View>
+                <Text style={styles.deadlineLabel}>Deadline</Text>
+                <Text style={styles.deadlineValue}>{tender.deadline}</Text>
+              </View>
+              <View style={styles.footerButtons}>
+                <TouchableOpacity style={styles.secondaryButton}>
+                  <Text style={styles.secondaryButtonText}>AI Analysis</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.primaryButton}
+                  onPress={() => handleViewProject(tender)}
+                >
+                  <Text style={styles.primaryButtonText}>View Project</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
+        ))}
       </ScrollView>
     </View>
   )
@@ -215,6 +311,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 18,
     padding: 16,
+    marginBottom: 16,
     elevation: 2,
     shadowColor: '#000',
     shadowOpacity: 0.05,
@@ -226,6 +323,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  badgeBase: {
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+  },
   cardTitle: {
     flex: 1,
     fontSize: 16,
@@ -235,12 +337,21 @@ const styles = StyleSheet.create({
   },
   badgeAwarded: {
     backgroundColor: '#DCFCE7',
-    borderRadius: 999,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+  },
+  badgeOpen: {
+    backgroundColor: '#DBEAFE',
   },
   badgeAwardedText: {
     color: '#15803D',
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  badgeOpenText: {
+    color: '#1D4ED8',
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  badgeText: {
     fontSize: 11,
     fontWeight: '600',
   },
@@ -305,6 +416,13 @@ const styles = StyleSheet.create({
   },
   winnerChipText: {
     color: '#FFFFFF',
+    fontWeight: '600',
+  },
+  pendingChip: {
+    backgroundColor: '#E0E7FF',
+  },
+  pendingChipText: {
+    color: '#312E81',
     fontWeight: '600',
   },
   footerRow: {
