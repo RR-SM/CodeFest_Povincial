@@ -234,7 +234,12 @@ const Budgets = () => {
   );
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      nestedScrollEnabled={true}
+      removeClippedSubviews={true}
+      scrollEventThrottle={16}
+    >
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Government Budget Tracker</Text>
@@ -432,7 +437,13 @@ const Budgets = () => {
               value={searchTerm}
               onChangeText={setSearchTerm}
             />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterContainer}>
+            <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false} 
+              style={styles.filterContainer}
+              nestedScrollEnabled={true}
+              scrollEventThrottle={16}
+            >
               <TouchableOpacity
                 style={[styles.filterButton, selectedDept === 'all' && styles.filterButtonActive]}
                 onPress={() => setSelectedDept('all')}

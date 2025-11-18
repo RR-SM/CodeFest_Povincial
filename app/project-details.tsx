@@ -174,6 +174,9 @@ export default function ProjectDetails() {
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingHorizontal: 10, paddingTop: 24, paddingBottom: 100 }}
+        nestedScrollEnabled={true}
+        removeClippedSubviews={true}
+        scrollEventThrottle={16}
       >
         {/* Main Info Card */}
         <View

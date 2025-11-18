@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useMemo, useRef, useState } from "react";
-import { ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import "../globals.css";
 
 interface ProjectCardProps {
@@ -68,85 +68,85 @@ const ProjectCard = ({
           end={{ x: 0, y: 0 }}
           style={{ padding: 20 }}
         >
-      {/* Project Title */}
-      <Text
-        style={{
-          fontSize: 20,
-          fontWeight: "bold",
-          color: "#1a1a1a",
-          marginBottom: 16,
-        }}
-      >
-        {title}
-      </Text>
-
-      {/* Budget Section */}
-      <View style={{ marginBottom: 16 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 6 }}>
-          <Ionicons name="cash-outline" size={18} color="#1E6FD9" />
-          <Text style={{ fontSize: 13, color: "#666", marginLeft: 6 }}>Budget</Text>
-        </View>
-
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <View>
-            <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Estimated</Text>
-            <Text style={{ fontSize: 14, fontWeight: "600", color: "#1E6FD9" }}>
-              {estimatedBudget}
-            </Text>
-          </View>
-          <View>
-            <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Allocated</Text>
-            <Text style={{ fontSize: 14, fontWeight: "600", color: "#2E7D32" }}>
-              {allocatedBudget}
-            </Text>
-          </View>
-          <View>
-            <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Spent</Text>
-            <Text style={{ fontSize: 14, fontWeight: "600", color: "#E23D69" }}>
-              {spentBudget}
-            </Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Timeline Section */}
-      <View style={{ marginBottom: 16 }}>
-
-        <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 8 }}>
-          <View>
-            <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Start Date</Text>
-            <Text style={{ fontSize: 14, fontWeight: "600", color: "#333" }}>{startDate}</Text>
-          </View>
-          <View style={{ alignItems: "flex-end" }}>
-            <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>End Date</Text>
-            <Text style={{ fontSize: 14, fontWeight: "600", color: "#333" }}>{endDate}</Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Physical Progress */}
-      <View style={{ marginBottom: 8 }}>
-        <View
-          style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}
-        >
-          <Text style={{ fontSize: 13, color: "#666" }}>Physical Progress</Text>
-          <Text style={{ fontSize: 16, fontWeight: "700", color: getPhysicalColor(physicalProgress) }}>
-            {physicalProgress}%
-          </Text>
-        </View>
-        <View style={{ height: 8, backgroundColor: "#E0E0E0", borderRadius: 4, overflow: "hidden", marginBottom: 8 }}>
-          <View
+          {/* Project Title */}
+          <Text
             style={{
-              height: "100%",
-              width: `${physicalProgress}%`,
-              backgroundColor: getPhysicalColor(physicalProgress),
-              borderRadius: 4,
+              fontSize: 20,
+              fontWeight: "bold",
+              color: "#1a1a1a",
+              marginBottom: 16,
             }}
-          />
-        </View>
-      </View>
+          >
+            {title}
+          </Text>
 
-      {/* Financial Progress */}
+          {/* Budget Section */}
+          <View style={{ marginBottom: 16 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 6 }}>
+              <Ionicons name="cash-outline" size={18} color="#1E6FD9" />
+              <Text style={{ fontSize: 13, color: "#666", marginLeft: 6 }}>Budget</Text>
+            </View>
+
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <View>
+                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Estimated</Text>
+                <Text style={{ fontSize: 14, fontWeight: "600", color: "#1E6FD9" }}>
+                  {estimatedBudget}
+                </Text>
+              </View>
+              <View>
+                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Allocated</Text>
+                <Text style={{ fontSize: 14, fontWeight: "600", color: "#2E7D32" }}>
+                  {allocatedBudget}
+                </Text>
+              </View>
+              <View>
+                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Spent</Text>
+                <Text style={{ fontSize: 14, fontWeight: "600", color: "#E23D69" }}>
+                  {spentBudget}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Timeline Section */}
+          <View style={{ marginBottom: 16 }}>
+
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 8 }}>
+              <View>
+                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Start Date</Text>
+                <Text style={{ fontSize: 14, fontWeight: "600", color: "#333" }}>{startDate}</Text>
+              </View>
+              <View style={{ alignItems: "flex-end" }}>
+                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>End Date</Text>
+                <Text style={{ fontSize: 14, fontWeight: "600", color: "#333" }}>{endDate}</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Physical Progress */}
+          <View style={{ marginBottom: 8 }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}
+            >
+              <Text style={{ fontSize: 13, color: "#666" }}>Physical Progress</Text>
+              <Text style={{ fontSize: 16, fontWeight: "700", color: getPhysicalColor(physicalProgress) }}>
+                {physicalProgress}%
+              </Text>
+            </View>
+            <View style={{ height: 8, backgroundColor: "#E0E0E0", borderRadius: 4, overflow: "hidden", marginBottom: 8 }}>
+              <View
+                style={{
+                  height: "100%",
+                  width: `${physicalProgress}%`,
+                  backgroundColor: getPhysicalColor(physicalProgress),
+                  borderRadius: 4,
+                }}
+              />
+            </View>
+          </View>
+
+          {/* Financial Progress */}
 
 
           {/* View Details */}
@@ -227,7 +227,6 @@ export default function Projects() {
   );
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [showSearchBar, setShowSearchBar] = useState(true);
   const lastScrollOffset = useRef(0);
 
   const filteredProjects = useMemo(() => {
@@ -251,65 +250,96 @@ export default function Projects() {
 
   const handleScroll = (event: any) => {
     const currentOffset = event.nativeEvent.contentOffset.y;
-    const diff = currentOffset - lastScrollOffset.current;
-
-    if (searchQuery.length > 0 || currentOffset < 30) {
-      if (!showSearchBar) setShowSearchBar(true);
-    } else if (diff > 10 && currentOffset > 30) {
-      if (showSearchBar) setShowSearchBar(false);
-    } else if (diff < -10) {
-      if (!showSearchBar) setShowSearchBar(true);
-    }
-
     lastScrollOffset.current = currentOffset;
+    // Search bar always visible - removed hide logic
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#F8F9FA" }}>
-      {/* Header */}
-      <View
+    <View style={{ flex: 1, backgroundColor: "#F5F7FA" }}>
+      {/* Modern Header with Gradient */}
+      <LinearGradient
+        colors={["#1E3A8A", "#3B82F6", "#60A5FA"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
         style={{
-          backgroundColor: "#0F0D23",
           paddingTop: 60,
-          paddingBottom: 28,
-          paddingHorizontal: 20,
+          paddingBottom: 24,
+          paddingHorizontal: 24,
+          borderBottomLeftRadius: 32,
+          borderBottomRightRadius: 32,
+          shadowColor: "#1E3A8A",
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.3,
+          shadowRadius: 16,
+          elevation: 8,
         }}
       >
-        <Text style={{ fontSize: 32, fontWeight: "bold", color: "#FFFFFF", marginBottom: 8 }}>
-          Projects
-        </Text>
-        <Text style={{ fontSize: 15, color: "#B0B0B0" }}>
-          Track progress of major infrastructure projects
-        </Text>
-      </View>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 36, fontWeight: "800", color: "#FFFFFF", letterSpacing: -0.5 }}>
+              Projects
+            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 6 }}>
+              <View style={{ width: 4, height: 4, borderRadius: 2, backgroundColor: "#60A5FA", marginRight: 8 }} />
+              <Text style={{ fontSize: 14, color: "#E0E7FF", fontWeight: "500" }}>
+                {filteredProjects.length} Active Infrastructure Projects
+              </Text>
+            </View>
+          </View>
+          <View style={{ 
+            backgroundColor: "rgba(255,255,255,0.2)", 
+            borderRadius: 16, 
+            padding: 12,
+            borderWidth: 1,
+            borderColor: "rgba(255,255,255,0.3)"
+          }}>
+            <Ionicons name="construct" size={28} color="#FFFFFF" />
+          </View>
+        </View>
+      </LinearGradient>
 
-      {showSearchBar && (
-        <View style={{ paddingHorizontal: 20, paddingBottom: 12, paddingTop: 16, backgroundColor: "#F8F9FA" }}>
+      {/* Floating Search Bar */}
+      <View style={{ 
+          paddingHorizontal: 24, 
+          marginTop: -32,
+          marginBottom: 20,
+          zIndex: 100,
+          position: "relative"
+        }}>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               backgroundColor: "#FFFFFF",
-              borderRadius: 14,
-              paddingHorizontal: 16,
-              paddingVertical: 10,
-              elevation: 3,
-              shadowColor: "#000",
-              shadowOpacity: 0.08,
-              shadowRadius: 10,
-              shadowOffset: { width: 0, height: 4 },
+              borderRadius: 20,
+              paddingHorizontal: 18,
+              paddingVertical: 16,
+              elevation: 12,
+              shadowColor: "#1E3A8A",
+              shadowOpacity: 0.2,
+              shadowRadius: 24,
+              shadowOffset: { width: 0, height: 10 },
+              borderWidth: 1.5,
+              borderColor: "rgba(59, 130, 246, 0.15)",
             }}
           >
-            <Ionicons name="search" size={20} color="#6B7280" />
+            <View style={{
+              backgroundColor: "#EFF6FF",
+              borderRadius: 12,
+              padding: 8,
+              marginRight: 12
+            }}>
+              <Ionicons name="search" size={20} color="#3B82F6" />
+            </View>
             <TextInput
-              placeholder="Search projects by name..."
-              placeholderTextColor="#9CA3AF"
+              placeholder="Search infrastructure projects..."
+              placeholderTextColor="#94A3B8"
               style={{
                 flex: 1,
-                marginLeft: 10,
-                color: "#111827",
+                color: "#0F172A",
                 fontSize: 15,
-                paddingVertical: 6,
+                fontWeight: "500",
+                paddingVertical: 4,
               }}
               value={searchQuery}
               onChangeText={setSearchQuery}
@@ -317,25 +347,36 @@ export default function Projects() {
               autoCapitalize="none"
             />
             {searchQuery.length > 0 && (
-              <TouchableOpacity onPress={() => setSearchQuery("")}>
-                <Ionicons name="close-circle" size={20} color="#9CA3AF" />
+              <TouchableOpacity 
+                onPress={() => setSearchQuery("")}
+                style={{
+                  backgroundColor: "#F1F5F9",
+                  borderRadius: 10,
+                  padding: 6,
+                  marginLeft: 8
+                }}
+              >
+                <Ionicons name="close" size={18} color="#64748B" />
               </TouchableOpacity>
             )}
           </View>
 
+          {/* Search Suggestions Dropdown */}
           {searchQuery.length > 0 && (
             <View
               style={{
                 backgroundColor: "#FFFFFF",
-                borderRadius: 12,
-                marginTop: 10,
+                borderRadius: 16,
+                marginTop: 12,
                 paddingVertical: 8,
-                paddingHorizontal: 12,
-                elevation: 2,
-                shadowColor: "#000",
-                shadowOpacity: 0.08,
-                shadowRadius: 8,
-                shadowOffset: { width: 0, height: 2 },
+                elevation: 10,
+                shadowColor: "#1E3A8A",
+                shadowOpacity: 0.15,
+                shadowRadius: 16,
+                shadowOffset: { width: 0, height: 6 },
+                borderWidth: 1,
+                borderColor: "#E2E8F0",
+                maxHeight: 300,
               }}
             >
               {suggestions.length > 0 ? (
@@ -343,30 +384,50 @@ export default function Projects() {
                   <TouchableOpacity
                     key={suggestion.id}
                     style={{
-                      paddingVertical: 6,
-                      borderBottomWidth: index === suggestions.length - 1 ? 0 : StyleSheet.hairlineWidth,
-                      borderBottomColor: "#E5E7EB",
+                      paddingVertical: 12,
+                      paddingHorizontal: 16,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      borderBottomWidth: index === suggestions.length - 1 ? 0 : 1,
+                      borderBottomColor: "#F1F5F9",
                     }}
                     onPress={() => setSearchQuery(suggestion.title)}
                   >
-                    <Text style={{ color: "#0F172A", fontSize: 14 }}>{suggestion.title}</Text>
+                    <View style={{
+                      backgroundColor: "#EFF6FF",
+                      borderRadius: 8,
+                      padding: 6,
+                      marginRight: 12
+                    }}>
+                      <Ionicons name="document-text" size={16} color="#3B82F6" />
+                    </View>
+                    <Text style={{ color: "#0F172A", fontSize: 14, fontWeight: "500", flex: 1 }}>
+                      {suggestion.title}
+                    </Text>
+                    <Ionicons name="arrow-forward" size={16} color="#94A3B8" />
                   </TouchableOpacity>
                 ))
               ) : (
-                <Text style={{ color: "#6B7280", fontSize: 13 }}>No matching projects yet.</Text>
+                <View style={{ paddingVertical: 16, paddingHorizontal: 16, alignItems: "center" }}>
+                  <Ionicons name="search-outline" size={32} color="#CBD5E1" style={{ marginBottom: 8 }} />
+                  <Text style={{ color: "#64748B", fontSize: 14, fontWeight: "500" }}>
+                    No matching projects found
+                  </Text>
+                </View>
               )}
             </View>
           )}
         </View>
-      )}
 
       {/* Project Cards */}
       <ScrollView
         style={{ flex: 1 }}
-        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: showSearchBar ? 0 : 16, paddingBottom: 100 }}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 0, paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={16}
+        nestedScrollEnabled={true}
+        removeClippedSubviews={true}
       >
         {filteredProjects.map((project) => (
           <ProjectCard

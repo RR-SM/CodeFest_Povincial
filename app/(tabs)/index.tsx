@@ -1,5 +1,5 @@
-import { Text, View, TextInput, TouchableOpacity, ImageBackground, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import "../globals.css";
 
 export default function Home() {
@@ -29,7 +29,12 @@ export default function Home() {
         />
       </ImageBackground>
 
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView 
+        style={{ flex: 1 }}
+        nestedScrollEnabled={true}
+        removeClippedSubviews={true}
+        scrollEventThrottle={16}
+      >
         {/* Hero Content */}
         <View
           style={{

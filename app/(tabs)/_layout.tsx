@@ -1,23 +1,69 @@
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { Tabs } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-import { View, Text } from "react-native";
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Text, View } from "react-native";
 
-const TabIcon = ({ focused, children }: { focused: boolean; children: React.ReactNode }) => {
+const TabIcon = ({ focused, children, label }: { focused: boolean; children: React.ReactNode; label: string }) => {
+  if (focused) {
+    return (
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <LinearGradient
+          colors={["#6366F1", "#8B5CF6"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            width: 56,
+            height: 56,
+            borderRadius: 28,
+            shadowColor: "#6366F1",
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.4,
+            shadowRadius: 8,
+            elevation: 8,
+          }}
+        >
+          {children}
+        </LinearGradient>
+        <Text
+          style={{
+            fontSize: 7,
+            fontWeight: "700",
+            color: "#6366F1",
+            marginTop: 4,
+            textTransform: "uppercase",
+            letterSpacing: 0.5,
+          }}
+        >
+          {label}
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View
       style={{
         alignItems: "center",
         justifyContent: "center",
-        width: 72,
-        height: 50,
-        borderRadius: 50,
-        backgroundColor: focused ? "rgba(255, 255, 255, 0.2)" : "transparent",
       }}
     >
-      {children}
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          width: 56,
+          height: 56,
+        }}
+      >
+        {children}
+      </View>
     </View>
   );
 };
@@ -25,49 +71,40 @@ const TabIcon = ({ focused, children }: { focused: boolean; children: React.Reac
 export default function TabsLayout() {
   return (
     <Tabs
+      initialRouteName="index"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
         tabBarItemStyle: {
           justifyContent: "center",
           alignItems: "center",
-          height: 56,
         },
         tabBarStyle: {
-          backgroundColor: "#0F0D23",
-          borderRadius: 50,
-          marginHorizontal: 15,
+          backgroundColor: "#FFFFFF",
+          borderTopWidth: 0,
+          marginHorizontal: 0,
+          marginBottom: 0,
           paddingTop: 8,
-          marginBottom: 30,
-          height: 56,
+          paddingBottom: 20,
+          height: 65,
           position: "absolute",
-          overflow: "hidden",
-          borderWidth: 1,
-          borderColor: "#0F0D23",
-          paddingHorizontal: 0,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 12,
+          elevation: 20,
+          paddingHorizontal: 16,
         },
       }}
     >
       <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused}>
-              <Ionicons name="home" size={20} color={focused ? "#FFFFFF" : "#8E8E93"} />
-            </TabIcon>
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="budget"
         options={{
-          title: "Budgets",
+          title: "Budget",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused}>
-              <FontAwesome5 name="money-bill" size={20} color={focused ? "#FFFFFF" : "#8E8E93"} />
+            <TabIcon focused={focused} label="Budget">
+              <MaterialCommunityIcons name="cash-multiple" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
             </TabIcon>
           ),
         }}
@@ -78,8 +115,20 @@ export default function TabsLayout() {
           title: "Projects",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused}>
-              <AntDesign name="fund-projection-screen" size={20} color={focused ? "#FFFFFF" : "#8E8E93"} />
+            <TabIcon focused={focused} label="Projects">
+              <Ionicons name="construct" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
+            </TabIcon>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} label="Home">
+              <Ionicons name="home" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
             </TabIcon>
           ),
         }}
@@ -90,8 +139,8 @@ export default function TabsLayout() {
           title: "Tenders",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused}>
-              <FontAwesome name="user" size={20} color={focused ? "#FFFFFF" : "#8E8E93"} />
+            <TabIcon focused={focused} label="Tenders">
+              <Ionicons name="document-text" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
             </TabIcon>
           ),
         }}
@@ -102,8 +151,8 @@ export default function TabsLayout() {
           title: "Settings",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused}>
-              <Ionicons name="settings" size={20} color={focused ? "#FFFFFF" : "#8E8E93"} />
+            <TabIcon focused={focused} label="Settings">
+              <Ionicons name="settings" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
             </TabIcon>
           ),
         }}
