@@ -40,7 +40,6 @@ const ProjectCard = ({
     return "#E23D69";
   };
 
-
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -111,7 +110,6 @@ const ProjectCard = ({
 
           {/* Timeline Section */}
           <View style={{ marginBottom: 16 }}>
-
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 8 }}>
               <View>
                 <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Start Date</Text>
@@ -147,7 +145,26 @@ const ProjectCard = ({
           </View>
 
           {/* Financial Progress */}
-
+          <View style={{ marginBottom: 8 }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}
+            >
+              <Text style={{ fontSize: 13, color: "#666" }}>Financial Progress</Text>
+              <Text style={{ fontSize: 16, fontWeight: "700", color: "#FF9800" }}>
+                {financialProgress}%
+              </Text>
+            </View>
+            <View style={{ height: 8, backgroundColor: "#E0E0E0", borderRadius: 4, overflow: "hidden" }}>
+              <View
+                style={{
+                  height: "100%",
+                  width: `${financialProgress}%`,
+                  backgroundColor: "#FF9800",
+                  borderRadius: 4,
+                }}
+              />
+            </View>
+          </View>
 
           {/* View Details */}
           <View
@@ -180,7 +197,7 @@ export default function Projects() {
         startDate: "May 14, 2021",
         endDate: "April 2027",
         Department: "The Nepali Army",
-        image: "https://republicaimg.nagariknewscdn.com/shared/web/uploads/media/z8syEGP59L1KkOGpeBwbEdVToIiCO00Utel0nUlM.jpg",
+        image: "https://imgs.search.brave.com/Q9rU2hLGBaRROUDcTK8A2yFaTHVAiflFxKd_2MwLvSU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vd3d3Lm5l/cGFsbGl2ZXRvZGF5/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyMi8wNy9mYXN0/LXRyYWNrLW5lcGFs/LXJzcy5qcGc_Zml0/PTEyODAsNzIwJnNz/bD0x",
       },
       {
         id: 2,
@@ -194,7 +211,7 @@ export default function Projects() {
         endDate: "April 2021",
         Department: "Melamchi Water Supply Development Board (MWSDB)",
         image:
-          "https://imgs.search.brave.com/3Nyj3La35t5x8QDqtV-AfGAPSuuA04Lh_vdNCSohVeg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMtYXBpLmthdGht/YW5kdXBvc3QuY29t/L3RodW1iLnBocD9z/cmM9aHR0cHM6Ly9h/c3NldHMtY2RuLmth/dGhtYW5kdXBvc3Qu/Y29tL3VwbG9hZHMv/c291cmNlL25ld3Mv/MjAyMi9uZXdzL21l/bGFtY2hpLTE2NzA2/Mzk0MTUucG5nJnc9/OTAwJmhlaWdodD02/MDE",
+          "https://imgs.search.brave.com/3Nyj3La35t5x8QDqtV-AfGAPSuuA04Lh_vdNCSohVeg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMtYXBpLmthdGhtYW5kdXBvc3QuY29tL3RodW1iLnBocD9z/cmM9aHR0cHM6Ly9h/c3NldHMtY2RuLmth/dGhtYW5kdXBvc3Qu/Y29tL3VwbG9hZHMv/c291cmNlL25ld3Mv/MjAyMi9uZXdzL21l/bGFtY2hpLTE2NzA2/Mzk0MTUucG5nJnc9/OTAwJmhlaWdodD02/MDE",
       },
       {
         id: 3,
@@ -206,7 +223,7 @@ export default function Projects() {
         financialProgress: 53.2,
         startDate: "Apr 2016",
         endDate: "March 2022",
-        Department: "Civil Aviation Authority of Nepal (CAAN) ",
+        Department: "Civil Aviation Authority of Nepal (CAAN)",
         image: "https://imgs.search.brave.com/yJENKCqV8QX7dHaXZe7A-VSyJXIYC8LMkCi8jSh9IqY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/aS1zY21wLmNvbS9z/aXRlcy9kZWZhdWx0/L2ZpbGVzL3N0eWxl/cy8xMDIweDY4MC9w/dWJsaWMvZDgvaW1h/Z2VzL2NhbnZhcy8y/MDI1LzAzLzA3L2Vk/MzA4Y2Q3LTA0ZWQt/NGIzZC1iNzlmLTM5/MGUyNDljY2Y5OV82/MWI2ZjQ3OS5qcGc_/aXRvaz1veTBIZFg3/byZ2PTE3NDEzNDY3/NDg",
       },
       {
@@ -221,6 +238,84 @@ export default function Projects() {
         endDate: "Dec 2025",
         Department: "Department of Roads",
         image: "https://imgs.search.brave.com/sZN7wfeTS5S-6r36_yIREXQlVXSNHomqxrP8JABZtiQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/czN3YWFzLmdvdi5p/bi9zMzY3ZjdmYjg3/M2VhZjI5NTI2YTEx/YTliN2FjMzNiZmFj/L3VwbG9hZHMvYmZp/X3RodW1iLzIwMTgw/MzEyNTQtb2x3OTg4/bHdiYmZha256dnAx/MzFhMmI2MTJ2cDZh/NG54N3VxZzBuaDU2/LmpwZw",
+      },
+      {
+        id: 5,
+        title: "Chitwan-Bharatpur Railway Project",
+        estimatedBudget: "Rs. 45 Billion",
+        allocatedBudget: "Rs. 12.3 Billion",
+        spentBudget: "Rs. 6.8 Billion",
+        physicalProgress: 35,
+        financialProgress: 42,
+        startDate: "Feb 2020",
+        endDate: "June 2026",
+        Department: "Nepal Railways",
+        image: "https://imgs.search.brave.com/9wQKqN0-W8qvvYYxVQ-FyxP-kL0c0nw8QH_-jP9PXEU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/aXRkYS5jb20vY20v/c2VydmljZXMvaW1h/Z2VzL2luZGlhLWlv/dnQtcmFpbHdheS1s/aW5rLmpwZw",
+      },
+      {
+        id: 6,
+        title: "Upper Karnali Hydropower Project",
+        estimatedBudget: "Rs. 187 Billion",
+        allocatedBudget: "Rs. 18.5 Billion",
+        spentBudget: "Rs. 8.2 Billion",
+        physicalProgress: 28,
+        financialProgress: 35,
+        startDate: "Sept 2019",
+        endDate: "Dec 2027",
+        Department: "Nepal Electricity Authority (NEA)",
+        image: "https://imgs.search.brave.com/6YMl4xI0qhLQV5g-MZI3qXPxqLVyFYG45TxRsGQJZgE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/dGhlZHJhbWEuY29t/L3Jlc2l6ZS9jb250/ZW50LWltYWdlcy9y/ZXNpemluZy91L2Fh/LzIwMjIvMDQvMjAy/MjA0LTEyMDAw/MDB4MzYwMDAwLWth/cm5hbGktMTY0OTU5/NTkzOS5qcGc",
+      },
+      {
+        id: 7,
+        title: "Tribhuvan International Airport Expansion",
+        estimatedBudget: "Rs. 23.5 Billion",
+        allocatedBudget: "Rs. 8.7 Billion",
+        spentBudget: "Rs. 5.3 Billion",
+        physicalProgress: 52,
+        financialProgress: 45,
+        startDate: "Aug 2021",
+        endDate: "Dec 2025",
+        Department: "Civil Aviation Authority of Nepal (CAAN)",
+        image: "https://imgs.search.brave.com/wKnJ0h7xQ8qLGPyQX0QW2M1U7vjLsOyxFYaU6IkUHQo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuYXRsdGFzLm5v/d3EvY2hhcmJlbGwu/anBn",
+      },
+      {
+        id: 8,
+        title: "Pokhara Lekhnath Water Supply Scheme",
+        estimatedBudget: "Rs. 12 Billion",
+        allocatedBudget: "Rs. 4.2 Billion",
+        spentBudget: "Rs. 2.8 Billion",
+        physicalProgress: 45,
+        financialProgress: 52,
+        startDate: "Mar 2019",
+        endDate: "Mar 2024",
+        Department: "Pokhara Metropolitan City",
+        image: "https://imgs.search.brave.com/POdkTL4sJyNx3AZRvKyM5rr8nXAeQrvlCTWFW1KL8Yw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/aGVyYWxkLmNvbS5u/cC91cGxvYWRzL2lt/YWdlcy9jb2xsZWN0/aW9ucy8yMDIyLzAz/L2hlcmFsZC5jb20u/bmUuMjAyMjAzMTcw/MjI1MTUuanBn",
+      },
+      {
+        id: 9,
+        title: "Jiri to Ridi Road Expansion",
+        estimatedBudget: "Rs. 18 Billion",
+        allocatedBudget: "Rs. 5.6 Billion",
+        spentBudget: "Rs. 2.9 Billion",
+        physicalProgress: 38,
+        financialProgress: 40,
+        startDate: "June 2020",
+        endDate: "Dec 2026",
+        Department: "Department of Roads",
+        image: "https://imgs.search.brave.com/yZvj3R3T1pK2qZ0d3gJlM5vK6vLsQp0vJ7jP8fKjV_w/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMuYnJpdGFubmlj/YS5jb20vaW1hZ2Vz/L0luZGlhbjEwMTAx/MDEuanBn",
+      },
+      {
+        id: 10,
+        title: "Kathmandu Valley Water Supply Improvement Project",
+        estimatedBudget: "Rs. 58 Billion",
+        allocatedBudget: "Rs. 15.8 Billion",
+        spentBudget: "Rs. 7.5 Billion",
+        physicalProgress: 42,
+        financialProgress: 47,
+        startDate: "Jan 2018",
+        endDate: "Dec 2025",
+        Department: "Kathmandu Upatyaka Khanepani Limited (KUKL)",
+        image: "https://imgs.search.brave.com/L8Q3Z0R5qU3aT0v1K9nP2rV4sM5lY8xW3nO1fJ2eK_k/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/dGhlZHJhbWEuY29t/L3Jlc2l6ZS9jb250/ZW50LWltYWdlcy9y/ZXNpemluZy91L2Lm/bG9ncy9teWJsb2cv/MjAxOS8wMi8yMDE5/MDIyNzEwMDAwMDEt/a2F0aG1hbmR1LXdh/dGVyLmpwZw",
       },
     ],
     []
@@ -251,7 +346,6 @@ export default function Projects() {
   const handleScroll = (event: any) => {
     const currentOffset = event.nativeEvent.contentOffset.y;
     lastScrollOffset.current = currentOffset;
-    // Search bar always visible - removed hide logic
   };
 
   return (
