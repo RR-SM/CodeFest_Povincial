@@ -1,11 +1,16 @@
+import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import { Alert, Dimensions, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { BarChart, LineChart, PieChart } from 'react-native-chart-kit';
+import { useTheme } from "../contexts/ThemeContext";
 
 const Budgets = () => {
+  const { theme } = useTheme();
   const screenWidth = Dimensions.get('window').width;
+  const styles = getStyles(theme);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDept, setSelectedDept] = useState('all');
   const [viewMode, setViewMode] = useState('overview');
@@ -45,7 +50,7 @@ const Budgets = () => {
     name: d.name.split(' ')[0],
     population: d.allocated,
     color: d.color,
-    legendFontColor: '#333',
+    legendFontColor: theme.colors.text,
     legendFontSize: 12
   }));
 
@@ -75,12 +80,22 @@ const Budgets = () => {
   };
 
   const getStatusStyle = (status: string) => {
-    switch(status) {
-      case 'Completed': return { backgroundColor: '#dcfce7', color: '#166534' };
-      case 'In Progress': return { backgroundColor: '#dbeafe', color: '#1e40af' };
-      case 'Near Completion': return { backgroundColor: '#fef3c7', color: '#92400e' };
-      case 'Delayed': return { backgroundColor: '#fee2e2', color: '#991b1b' };
-      default: return { backgroundColor: '#f3f4f6', color: '#374151' };
+    if (theme.isDark) {
+      switch(status) {
+        case 'Completed': return { backgroundColor: theme.colors.success + '20', color: theme.colors.success };
+        case 'In Progress': return { backgroundColor: theme.colors.primary + '20', color: theme.colors.primary };
+        case 'Near Completion': return { backgroundColor: theme.colors.warning + '20', color: theme.colors.warning };
+        case 'Delayed': return { backgroundColor: theme.colors.error + '20', color: theme.colors.error };
+        default: return { backgroundColor: theme.colors.border, color: theme.colors.textSecondary };
+      }
+    } else {
+      switch(status) {
+        case 'Completed': return { backgroundColor: '#dcfce7', color: '#166534' };
+        case 'In Progress': return { backgroundColor: '#dbeafe', color: '#1e40af' };
+        case 'Near Completion': return { backgroundColor: '#fef3c7', color: '#92400e' };
+        case 'Delayed': return { backgroundColor: '#fee2e2', color: '#991b1b' };
+        default: return { backgroundColor: '#f3f4f6', color: '#374151' };
+      }
     }
   };
 
@@ -225,53 +240,164 @@ const Budgets = () => {
     value: string;
     subtitle?: string;
     bgColor?: string;
-  }) => (
-    <View style={[styles.statCard, { backgroundColor: bgColor || '#fff' }]}>
-      <Text style={styles.statTitle}>{title}</Text>
-      <Text style={styles.statValue}>{value}</Text>
-      {subtitle && <Text style={styles.statSubtitle}>{subtitle}</Text>}
-    </View>
-  );
+  }) => {
+    // Use white text for dark colored backgrounds in dark mode
+    const isDarkCard = theme.isDark && bgColor && !bgColor.startsWith('#f') && !bgColor.startsWith('#e') && !bgColor.startsWith('#d');
+    const textColor = isDarkCard ? '#FFFFFF' : theme.colors.text;
+    const subtitleColor = isDarkCard ? 'rgba(255,255,255,0.8)' : theme.colors.textSecondary;
+
+    return (
+      <View style={[styles.statCard, { backgroundColor: bgColor || theme.colors.card }]}>
+        <Text style={[styles.statTitle, { color: subtitleColor }]}>{title}</Text>
+        <Text style={[styles.statValue, { color: textColor }]}>{value}</Text>
+        {subtitle && <Text style={[styles.statSubtitle, { color: subtitleColor }]}>{subtitle}</Text>}
+      </View>
+    );
+  };
 
   return (
-    <ScrollView 
-      style={styles.container}
-      nestedScrollEnabled={true}
-      removeClippedSubviews={true}
-      scrollEventThrottle={16}
-    >
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Government Budget Tracker</Text>
-        <Text style={styles.headerSubtitle}>Fiscal Year 2025 - Public Transparency Portal</Text>
-        <TouchableOpacity style={styles.exportButton} onPress={exportToCsv}>
-          <Text style={styles.exportButtonText}>📥 Export Report</Text>
-        </TouchableOpacity>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      {/* Modern Header with Gradient */}
+      <LinearGradient
+        colors={["#059669", "#10B981", "#34D399"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{
+          paddingTop: 60,
+          paddingBottom: 24,
+          paddingHorizontal: 24,
+          borderBottomLeftRadius: 32,
+          borderBottomRightRadius: 32,
+          shadowColor: "#059669",
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.3,
+          shadowRadius: 16,
+          elevation: 8,
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 36, fontWeight: "800", color: "#FFFFFF", letterSpacing: -0.5 }}>
+              Budget
+            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 6 }}>
+              <View style={{ width: 4, height: 4, borderRadius: 2, backgroundColor: "#A7F3D0", marginRight: 8 }} />
+              <Text style={{ fontSize: 14, color: "#A7F3D0", fontWeight: "500" }}>
+                Fiscal Year 2025 - Public Transparency Portal
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity
+            style={{
+              backgroundColor: theme.isDark ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)",
+              borderRadius: 16,
+              padding: 12,
+              borderWidth: 1,
+              borderColor: theme.isDark ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)"
+            }}
+            onPress={exportToCsv}
+          >
+            <Ionicons name="download" size={28} color="#FFFFFF" />
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
+
+      {/* Floating Search Bar */}
+      <View style={{
+        paddingHorizontal: 24,
+        marginTop: -32,
+        marginBottom: 20,
+        zIndex: 100,
+        position: "relative"
+      }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: theme.colors.surface,
+            borderRadius: 20,
+            paddingHorizontal: 18,
+            paddingVertical: 16,
+            elevation: 12,
+            shadowColor: "#059669",
+            shadowOpacity: 0.2,
+            shadowRadius: 24,
+            shadowOffset: { width: 0, height: 10 },
+            borderWidth: 1.5,
+            borderColor: "rgba(5, 150, 105, 0.15)",
+          }}
+        >
+          <View style={{
+            backgroundColor: theme.isDark ? theme.colors.accent + "20" : "#ECFDF5",
+            borderRadius: 12,
+            padding: 8,
+            marginRight: 12
+          }}>
+            <Ionicons name="search" size={20} color={theme.colors.accent} />
+          </View>
+          <TextInput
+            placeholder="Search budget items and projects..."
+            placeholderTextColor={theme.colors.textSecondary}
+            style={{
+              flex: 1,
+              color: theme.colors.text,
+              fontSize: 15,
+              fontWeight: "500",
+              paddingVertical: 4,
+            }}
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+            autoCorrect={false}
+            autoCapitalize="none"
+          />
+          {searchTerm.length > 0 && (
+            <TouchableOpacity
+              onPress={() => setSearchTerm("")}
+              style={{
+                backgroundColor: theme.colors.border,
+                borderRadius: 10,
+                padding: 6,
+                marginLeft: 8
+              }}
+            >
+              <Ionicons name="close" size={18} color={theme.colors.textSecondary} />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
+
+      <ScrollView
+        style={styles.container}
+        nestedScrollEnabled={true}
+        removeClippedSubviews={true}
+        scrollEventThrottle={16}
+        contentContainerStyle={{ paddingTop: 0 }}
+      >
 
       {/* Budget Overview Cards */}
       <View style={styles.statsContainer}>
         <StatCard
           title="Total Budget"
           value={formatCurrency(totalBudget)}
-          bgColor="#eff6ff" subtitle={undefined}        />
+          bgColor={theme.isDark ? "#1E3A8A" : "#eff6ff"}
+        />
         <StatCard
           title="Total Spent"
           value={formatCurrency(totalSpent)}
           subtitle={`${((totalSpent/totalBudget)*100).toFixed(1)}%`}
-          bgColor="#dcfce7"
+          bgColor={theme.isDark ? "#166534" : "#dcfce7"}
         />
         <StatCard
           title="Committed"
           value={formatCurrency(totalCommitted)}
           subtitle="Pending"
-          bgColor="#fef3c7"
+          bgColor={theme.isDark ? "#92400E" : "#fef3c7"}
         />
         <StatCard
           title="Available"
           value={formatCurrency(available)}
           subtitle={`${((available/totalBudget)*100).toFixed(1)}%`}
-          bgColor="#f3e8ff"
+          bgColor={theme.isDark ? "#7C2D12" : "#f3e8ff"}
         />
       </View>
 
@@ -323,12 +449,12 @@ const Budgets = () => {
               width={screenWidth - 60}
               height={220}
               chartConfig={{
-                backgroundColor: '#fff',
-                backgroundGradientFrom: '#fff',
-                backgroundGradientTo: '#fff',
+                backgroundColor: theme.colors.card,
+                backgroundGradientFrom: theme.colors.card,
+                backgroundGradientTo: theme.colors.card,
                 decimalPlaces: 1,
                 color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                labelColor: (opacity = 1) => theme.isDark ? `rgba(248, 250, 252, ${opacity})` : `rgba(0, 0, 0, ${opacity})`,
                 style: { borderRadius: 16 },
                 propsForDots: {
                   r: '6',
@@ -350,12 +476,12 @@ const Budgets = () => {
               yAxisLabel="$"
               yAxisSuffix="M"
               chartConfig={{
-                backgroundColor: '#fff',
-                backgroundGradientFrom: '#fff',
-                backgroundGradientTo: '#fff',
+                backgroundColor: theme.colors.card,
+                backgroundGradientFrom: theme.colors.card,
+                backgroundGradientTo: theme.colors.card,
                 decimalPlaces: 0,
                 color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                labelColor: (opacity = 1) => theme.isDark ? `rgba(248, 250, 252, ${opacity})` : `rgba(0, 0, 0, ${opacity})`,
                 style: { borderRadius: 16 }
               }}
               style={styles.chart}
@@ -434,12 +560,13 @@ const Budgets = () => {
             <TextInput
               style={styles.searchInput}
               placeholder="Search projects..."
+              placeholderTextColor={theme.colors.textSecondary}
               value={searchTerm}
               onChangeText={setSearchTerm}
             />
-            <ScrollView 
-              horizontal 
-              showsHorizontalScrollIndicator={false} 
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
               style={styles.filterContainer}
               nestedScrollEnabled={true}
               scrollEventThrottle={16}
@@ -513,42 +640,16 @@ const Budgets = () => {
           })}
         </View>
       )}
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: 'transparent',
     marginBottom: 70,
-  },
-  header: {
-    backgroundColor: '#2563eb',
-    padding: 20,
-    paddingTop: 50,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  headerSubtitle: {
-    fontSize: 14,
-    color: '#bfdbfe',
-    marginTop: 4,
-  },
-  exportButton: {
-    backgroundColor: '#fff',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    marginTop: 16,
-    alignSelf: 'flex-start',
-  },
-  exportButtonText: {
-    color: '#2563eb',
-    fontWeight: '600',
   },
   statsContainer: {
     flexDirection: 'row',
@@ -561,39 +662,39 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.card,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
+    shadowOpacity: theme.isDark ? 0.3 : 0.1,
     shadowRadius: 2,
     elevation: 2,
   },
   statTitle: {
     fontSize: 12,
-    color: '#6b7280',
+    color: theme.colors.textSecondary,
     marginBottom: 4,
   },
   statValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#111827',
+    color: theme.colors.text,
   },
   statSubtitle: {
     fontSize: 12,
-    color: '#10b981',
+    color: theme.colors.success,
     marginTop: 4,
     fontWeight: '600',
   },
   tabContainer: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.card,
     marginHorizontal: 16,
     borderRadius: 12,
     padding: 4,
     marginTop: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
+    shadowOpacity: theme.isDark ? 0.3 : 0.1,
     shadowRadius: 2,
     elevation: 2,
   },
@@ -604,12 +705,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   activeTab: {
-    backgroundColor: '#2563eb',
+    backgroundColor: theme.colors.primary,
   },
   tabText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#6b7280',
+    color: theme.colors.textSecondary,
   },
   activeTabText: {
     color: '#fff',
@@ -618,33 +719,33 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   chartCard: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.card,
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
+    shadowOpacity: theme.isDark ? 0.3 : 0.1,
     shadowRadius: 2,
     elevation: 2,
   },
   chartTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
+    color: theme.colors.text,
     marginBottom: 12,
   },
   chart: {
     borderRadius: 12,
   },
   deptCard: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.card,
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
+    shadowOpacity: theme.isDark ? 0.3 : 0.1,
     shadowRadius: 2,
     elevation: 2,
   },
@@ -663,7 +764,7 @@ const styles = StyleSheet.create({
   deptName: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#111827',
+    color: theme.colors.text,
     marginBottom: 16,
   },
   deptStats: {
@@ -676,21 +777,21 @@ const styles = StyleSheet.create({
   },
   deptStatLabel: {
     fontSize: 14,
-    color: '#6b7280',
+    color: theme.colors.textSecondary,
   },
   deptStatValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#111827',
+    color: theme.colors.text,
   },
   utilizationLabel: {
     fontSize: 12,
-    color: '#6b7280',
+    color: theme.colors.textSecondary,
     marginBottom: 8,
   },
   progressBar: {
     height: 12,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: theme.colors.border,
     borderRadius: 6,
     flexDirection: 'row',
     overflow: 'hidden',
@@ -716,19 +817,20 @@ const styles = StyleSheet.create({
   },
   legendText: {
     fontSize: 12,
-    color: '#6b7280',
+    color: theme.colors.textSecondary,
   },
   searchContainer: {
     marginBottom: 16,
   },
   searchInput: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.surface,
     borderRadius: 12,
     padding: 12,
     fontSize: 14,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: theme.colors.border,
     marginBottom: 12,
+    color: theme.colors.text,
   },
   filterContainer: {
     flexDirection: 'row',
@@ -737,28 +839,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: theme.colors.border,
     marginRight: 8,
   },
   filterButtonActive: {
-    backgroundColor: '#2563eb',
+    backgroundColor: theme.colors.primary,
   },
   filterButtonText: {
     fontSize: 14,
-    color: '#6b7280',
+    color: theme.colors.textSecondary,
     fontWeight: '500',
   },
   filterButtonTextActive: {
     color: '#fff',
   },
   projectCard: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.card,
     borderRadius: 12,
     padding: 16,
     marginBottom: 26,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
+    shadowOpacity: theme.isDark ? 0.3 : 0.1,
     shadowRadius: 2,
     elevation: 2,
   },
@@ -777,12 +879,12 @@ const styles = StyleSheet.create({
   projectName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
+    color: theme.colors.text,
     marginBottom: 4,
   },
   projectDept: {
     fontSize: 14,
-    color: '#6b7280',
+    color: theme.colors.textSecondary,
     marginBottom: 16,
   },
   projectStats: {

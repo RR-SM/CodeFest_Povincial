@@ -2,6 +2,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Tabs } from "expo-router";
 import { Text, View } from "react-native";
+import {useTheme} from  "../contexts/ThemeContext"
 
 const TabIcon = ({ focused, children, label }: { focused: boolean; children: React.ReactNode; label: string }) => {
   if (focused) {
@@ -69,6 +70,8 @@ const TabIcon = ({ focused, children, label }: { focused: boolean; children: Rea
 };
 
 export default function TabsLayout() {
+  const { theme } = useTheme();
+
   return (
     <Tabs
       initialRouteName="index"
@@ -80,7 +83,7 @@ export default function TabsLayout() {
           alignItems: "center",
         },
         tabBarStyle: {
-          backgroundColor: "#FFFFFF",
+          backgroundColor: theme.colors.surface,
           borderTopWidth: 0,
           marginHorizontal: 0,
           marginBottom: 0,
@@ -90,7 +93,7 @@ export default function TabsLayout() {
           position: "absolute",
           shadowColor: "#000",
           shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.1,
+          shadowOpacity: theme.isDark ? 0.3 : 0.1,
           shadowRadius: 12,
           elevation: 20,
           paddingHorizontal: 16,
@@ -104,7 +107,7 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} label="Budget">
-              <MaterialCommunityIcons name="cash-multiple" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
+              <MaterialCommunityIcons name="cash-multiple" size={24} color={focused ? "#FFFFFF" : theme.colors.textSecondary} />
             </TabIcon>
           ),
         }}
@@ -116,7 +119,7 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} label="Projects">
-              <Ionicons name="construct" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
+              <Ionicons name="construct" size={24} color={focused ? "#FFFFFF" : theme.colors.textSecondary} />
             </TabIcon>
           ),
         }}
@@ -128,7 +131,7 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} label="Home">
-              <Ionicons name="home" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
+              <Ionicons name="home" size={24} color={focused ? "#FFFFFF" : theme.colors.textSecondary} />
             </TabIcon>
           ),
         }}
@@ -140,7 +143,7 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} label="Tenders">
-              <Ionicons name="document-text" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
+              <Ionicons name="document-text" size={24} color={focused ? "#FFFFFF" : theme.colors.textSecondary} />
             </TabIcon>
           ),
         }}
@@ -152,7 +155,7 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} label="Settings">
-              <Ionicons name="settings" size={24} color={focused ? "#FFFFFF" : "#9CA3AF"} />
+              <Ionicons name="settings" size={24} color={focused ? "#FFFFFF" : theme.colors.textSecondary} />
             </TabIcon>
           ),
         }}
