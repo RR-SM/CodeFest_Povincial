@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useMemo, useRef, useState } from "react";
 import { ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useTheme } from "../contexts/ThemeContext";
 import "../globals.css";
 
 interface ProjectCardProps {
@@ -17,9 +18,10 @@ interface ProjectCardProps {
   endDate: string;
   image: string;
   onPress: () => void;
+  theme: any;
 }
 
-type Project = Omit<ProjectCardProps, "onPress"> & { id: number };
+type Project = Omit<ProjectCardProps, "onPress" | "theme"> & { id: number };
 
 const ProjectCard = ({
   title,
@@ -33,6 +35,7 @@ const ProjectCard = ({
   Department,
   image,
   onPress,
+  theme,
 }: ProjectCardProps) => {
   const getPhysicalColor = (value: number) => {
     if (value >= 75) return "#4CAF50";
@@ -62,7 +65,10 @@ const ProjectCard = ({
         }}
       >
         <LinearGradient
-          colors={["rgba(255,255,255,0.15)", "rgba(255,255,255,0.75)", "#FFFFFF"]}
+          colors={theme.isDark ?
+            ["rgba(0,0,0,0.15)", "rgba(0,0,0,0.75)", theme.colors.card] :
+            ["rgba(255,255,255,0.15)", "rgba(255,255,255,0.75)", "#FFFFFF"]
+          }
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 0 }}
           style={{ padding: 20 }}
@@ -72,7 +78,7 @@ const ProjectCard = ({
             style={{
               fontSize: 20,
               fontWeight: "bold",
-              color: "#1a1a1a",
+              color: theme.colors.text,
               marginBottom: 16,
             }}
           >
@@ -83,24 +89,24 @@ const ProjectCard = ({
           <View style={{ marginBottom: 16 }}>
             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 6 }}>
               <Ionicons name="cash-outline" size={18} color="#1E6FD9" />
-              <Text style={{ fontSize: 13, color: "#666", marginLeft: 6 }}>Budget</Text>
+              <Text style={{ fontSize: 13, color: theme.colors.textSecondary, marginLeft: 6 }}>Budget</Text>
             </View>
 
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <View>
-                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Estimated</Text>
+                <Text style={{ fontSize: 11, color: theme.colors.textSecondary, marginBottom: 2 }}>Estimated</Text>
                 <Text style={{ fontSize: 14, fontWeight: "600", color: "#1E6FD9" }}>
                   {estimatedBudget}
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Allocated</Text>
+                <Text style={{ fontSize: 11, color: theme.colors.textSecondary, marginBottom: 2 }}>Allocated</Text>
                 <Text style={{ fontSize: 14, fontWeight: "600", color: "#2E7D32" }}>
                   {allocatedBudget}
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Spent</Text>
+                <Text style={{ fontSize: 11, color: theme.colors.textSecondary, marginBottom: 2 }}>Spent</Text>
                 <Text style={{ fontSize: 14, fontWeight: "600", color: "#E23D69" }}>
                   {spentBudget}
                 </Text>
@@ -112,12 +118,12 @@ const ProjectCard = ({
           <View style={{ marginBottom: 16 }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 8 }}>
               <View>
-                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>Start Date</Text>
-                <Text style={{ fontSize: 14, fontWeight: "600", color: "#333" }}>{startDate}</Text>
+                <Text style={{ fontSize: 11, color: theme.colors.textSecondary, marginBottom: 2 }}>Start Date</Text>
+                <Text style={{ fontSize: 14, fontWeight: "600", color: theme.colors.text }}>{startDate}</Text>
               </View>
               <View style={{ alignItems: "flex-end" }}>
-                <Text style={{ fontSize: 11, color: "#999", marginBottom: 2 }}>End Date</Text>
-                <Text style={{ fontSize: 14, fontWeight: "600", color: "#333" }}>{endDate}</Text>
+                <Text style={{ fontSize: 11, color: theme.colors.textSecondary, marginBottom: 2 }}>End Date</Text>
+                <Text style={{ fontSize: 14, fontWeight: "600", color: theme.colors.text }}>{endDate}</Text>
               </View>
             </View>
           </View>
@@ -127,12 +133,12 @@ const ProjectCard = ({
             <View
               style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}
             >
-              <Text style={{ fontSize: 13, color: "#666" }}>Physical Progress</Text>
+              <Text style={{ fontSize: 13, color: theme.colors.textSecondary }}>Physical Progress</Text>
               <Text style={{ fontSize: 16, fontWeight: "700", color: getPhysicalColor(physicalProgress) }}>
                 {physicalProgress}%
               </Text>
             </View>
-            <View style={{ height: 8, backgroundColor: "#E0E0E0", borderRadius: 4, overflow: "hidden", marginBottom: 8 }}>
+            <View style={{ height: 8, backgroundColor: theme.colors.border, borderRadius: 4, overflow: "hidden", marginBottom: 8 }}>
               <View
                 style={{
                   height: "100%",
@@ -183,6 +189,7 @@ const ProjectCard = ({
 
 export default function Projects() {
   const router = useRouter();
+  const { theme } = useTheme();
 
   const projects = useMemo<Project[]>(
     () => [
@@ -349,7 +356,7 @@ export default function Projects() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#F5F7FA" }}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       {/* Modern Header with Gradient */}
       <LinearGradient
         colors={["#1E3A8A", "#3B82F6", "#60A5FA"]}
@@ -380,12 +387,12 @@ export default function Projects() {
               </Text>
             </View>
           </View>
-          <View style={{ 
-            backgroundColor: "rgba(255,255,255,0.2)", 
-            borderRadius: 16, 
+          <View style={{
+            backgroundColor: theme.isDark ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)",
+            borderRadius: 16,
             padding: 12,
             borderWidth: 1,
-            borderColor: "rgba(255,255,255,0.3)"
+            borderColor: theme.isDark ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)"
           }}>
             <Ionicons name="construct" size={28} color="#FFFFFF" />
           </View>
@@ -393,8 +400,8 @@ export default function Projects() {
       </LinearGradient>
 
       {/* Floating Search Bar */}
-      <View style={{ 
-          paddingHorizontal: 24, 
+      <View style={{
+          paddingHorizontal: 24,
           marginTop: -32,
           marginBottom: 20,
           zIndex: 100,
@@ -404,7 +411,7 @@ export default function Projects() {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              backgroundColor: "#FFFFFF",
+              backgroundColor: theme.colors.surface,
               borderRadius: 20,
               paddingHorizontal: 18,
               paddingVertical: 16,
@@ -427,10 +434,10 @@ export default function Projects() {
             </View>
             <TextInput
               placeholder="Search infrastructure projects..."
-              placeholderTextColor="#94A3B8"
+              placeholderTextColor={theme.colors.textSecondary}
               style={{
                 flex: 1,
-                color: "#0F172A",
+                color: theme.colors.text,
                 fontSize: 15,
                 fontWeight: "500",
                 paddingVertical: 4,
@@ -441,7 +448,7 @@ export default function Projects() {
               autoCapitalize="none"
             />
             {searchQuery.length > 0 && (
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => setSearchQuery("")}
                 style={{
                   backgroundColor: "#F1F5F9",
@@ -459,7 +466,7 @@ export default function Projects() {
           {searchQuery.length > 0 && (
             <View
               style={{
-                backgroundColor: "#FFFFFF",
+                backgroundColor: theme.colors.surface,
                 borderRadius: 16,
                 marginTop: 12,
                 paddingVertical: 8,
@@ -469,7 +476,7 @@ export default function Projects() {
                 shadowRadius: 16,
                 shadowOffset: { width: 0, height: 6 },
                 borderWidth: 1,
-                borderColor: "#E2E8F0",
+                borderColor: theme.colors.border,
                 maxHeight: 300,
               }}
             >
@@ -483,7 +490,7 @@ export default function Projects() {
                       flexDirection: "row",
                       alignItems: "center",
                       borderBottomWidth: index === suggestions.length - 1 ? 0 : 1,
-                      borderBottomColor: "#F1F5F9",
+                      borderBottomColor: theme.colors.border,
                     }}
                     onPress={() => setSearchQuery(suggestion.title)}
                   >
@@ -495,7 +502,7 @@ export default function Projects() {
                     }}>
                       <Ionicons name="document-text" size={16} color="#3B82F6" />
                     </View>
-                    <Text style={{ color: "#0F172A", fontSize: 14, fontWeight: "500", flex: 1 }}>
+                    <Text style={{ color: theme.colors.text, fontSize: 14, fontWeight: "500", flex: 1 }}>
                       {suggestion.title}
                     </Text>
                     <Ionicons name="arrow-forward" size={16} color="#94A3B8" />
@@ -504,7 +511,7 @@ export default function Projects() {
               ) : (
                 <View style={{ paddingVertical: 16, paddingHorizontal: 16, alignItems: "center" }}>
                   <Ionicons name="search-outline" size={32} color="#CBD5E1" style={{ marginBottom: 8 }} />
-                  <Text style={{ color: "#64748B", fontSize: 14, fontWeight: "500" }}>
+                  <Text style={{ color: theme.colors.textSecondary, fontSize: 14, fontWeight: "500" }}>
                     No matching projects found
                   </Text>
                 </View>
@@ -537,6 +544,7 @@ export default function Projects() {
             Department={project.Department}
             image={project.image}
             onPress={() => handleProjectPress(project)}
+            theme={theme}
           />
         ))}
       </ScrollView>

@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
+import { useTheme } from "./contexts/ThemeContext";
 
 import "./globals.css";
 
@@ -15,6 +16,7 @@ type Comment = {
 };
 
 export default function ProjectDetails() {
+  const { theme } = useTheme();
   const router = useRouter();
   const params = useLocalSearchParams();
 
@@ -117,17 +119,17 @@ export default function ProjectDetails() {
   const CommentCard = ({ comment }: { comment: Comment }) => (
     <View
       style={{
-        backgroundColor: "#F5F7FB",
+        backgroundColor: theme.colors.surface,
         borderRadius: 14,
         padding: 12,
         marginBottom: 10,
         borderWidth: 1,
-        borderColor: "#E5E7EB",
+        borderColor: theme.colors.border,
       }}
     >
-      <Text style={{ fontWeight: "600", color: "#0F172A", marginBottom: 4 }}>{comment.author}</Text>
-      <Text style={{ color: "#4B5563", lineHeight: 20, marginBottom: 6 }}>{comment.text}</Text>
-      <Text style={{ fontSize: 12, color: "#9CA3AF" }}>{readableDate(comment.timestamp)}</Text>
+      <Text style={{ fontWeight: "600", color: theme.colors.text, marginBottom: 4 }}>{comment.author}</Text>
+      <Text style={{ color: theme.colors.textSecondary, lineHeight: 20, marginBottom: 6 }}>{comment.text}</Text>
+      <Text style={{ fontSize: 12, color: theme.colors.textSecondary }}>{readableDate(comment.timestamp)}</Text>
     </View>
   );
 
@@ -143,7 +145,7 @@ export default function ProjectDetails() {
             borderRadius: 12,
             marginRight: 10,
             marginBottom: 10,
-            backgroundColor: "#E5E7EB",
+            backgroundColor: theme.colors.border,
           }}
         />
       ))}
@@ -151,11 +153,11 @@ export default function ProjectDetails() {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#F8F9FA" }}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       {/* Header */}
       <View
         style={{
-          backgroundColor: "#0F0D23",
+          backgroundColor: theme.colors.primary,
           paddingTop: 60,
           paddingBottom: 24,
           paddingHorizontal: 20,
@@ -181,13 +183,13 @@ export default function ProjectDetails() {
         {/* Main Info Card */}
         <View
           style={{
-            backgroundColor: "#FFFFFF",
+            backgroundColor: theme.colors.card,
             borderRadius: 16,
             padding: 15,
             marginBottom: 16,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
+            shadowOpacity: theme.isDark ? 0.3 : 0.08,
             shadowRadius: 8,
             elevation: 4,
           }}
@@ -196,26 +198,26 @@ export default function ProjectDetails() {
           <View style={{ marginBottom: 20 }}>
   <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
     <Ionicons name="cash-outline" size={20} color="#1E6FD9" />
-    <Text style={{ fontSize: 14, color: "#666", marginLeft: 8 }}>Budget</Text>
+    <Text style={{ fontSize: 14, color: theme.colors.textSecondary, marginLeft: 8 }}>Budget</Text>
   </View>
 
   <View style={{ flexDirection: "row", marginTop: 8, justifyContent: "space-between" }}>
     <View style={{ alignItems: "center", flex: 1 }}>
-      <Text style={{ fontSize: 12, color: "#999", marginBottom: 2 }}>Estimated</Text>
+      <Text style={{ fontSize: 12, color: theme.colors.textSecondary, marginBottom: 2 }}>Estimated</Text>
       <Text style={{ fontSize: 16, fontWeight: "600", color: "#1E6FD9" }}>
         {estimatedBudget}
       </Text>
     </View>
 
     <View style={{ alignItems: "center", flex: 1 }}>
-      <Text style={{ fontSize: 12, color: "#999", marginBottom: 2 }}>Allocated</Text>
+      <Text style={{ fontSize: 12, color: theme.colors.textSecondary, marginBottom: 2 }}>Allocated</Text>
       <Text style={{ fontSize: 16, fontWeight: "600", color: "#2E7D32" }}>
         {allocatedBudget}
       </Text>
     </View>
 
     <View style={{ alignItems: "center", flex: 1 }}>
-      <Text style={{ fontSize: 12, color: "#999", marginBottom: 2 }}>Spent</Text>
+      <Text style={{ fontSize: 12, color: theme.colors.textSecondary, marginBottom: 2 }}>Spent</Text>
       <Text style={{ fontSize: 16, fontWeight: "600", color: "#E23D69" }}>
         {spentBudget}
       </Text>
@@ -227,16 +229,16 @@ export default function ProjectDetails() {
           <View style={{ marginBottom: 20 }}>
             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
               <Ionicons name="calendar-outline" size={20} color="#666" />
-              <Text style={{ fontSize: 14, color: "#666", marginLeft: 8 }}>Project Timeline</Text>
+              <Text style={{ fontSize: 14, color: theme.colors.textSecondary, marginLeft: 8 }}>Project Timeline</Text>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 12, color: "#999", marginBottom: 4 }}>Start Date</Text>
-                <Text style={{ fontSize: 16, fontWeight: "600", color: "#333" }}>{startDate}</Text>
+                <Text style={{ fontSize: 12, color: theme.colors.textSecondary, marginBottom: 4 }}>Start Date</Text>
+                <Text style={{ fontSize: 16, fontWeight: "600", color: theme.colors.text }}>{startDate}</Text>
               </View>
               <View style={{ flex: 1, alignItems: "flex-end" }}>
-                <Text style={{ fontSize: 12, color: "#999", marginBottom: 4 }}>End Date</Text>
-                <Text style={{ fontSize: 16, fontWeight: "600", color: "#333" }}>{endDate}</Text>
+                <Text style={{ fontSize: 12, color: theme.colors.textSecondary, marginBottom: 4 }}>End Date</Text>
+                <Text style={{ fontSize: 16, fontWeight: "600", color: theme.colors.text }}>{endDate}</Text>
               </View>
             </View>
           </View>
@@ -246,12 +248,12 @@ export default function ProjectDetails() {
             {/* Physical */}
             <View style={{ marginBottom: 12 }}>
               <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 4 }}>
-                <Text style={{ fontSize: 14, color: "#666" }}>Physical Progress</Text>
+                <Text style={{ fontSize: 14, color: theme.colors.textSecondary }}>Physical Progress</Text>
                 <Text style={{ fontSize: 16, fontWeight: "700", color: getPhysicalColor(physicalNum) }}>
                   {physicalNum}%
                 </Text>
               </View>
-              <View style={{ height: 8, backgroundColor: "#E0E0E0", borderRadius: 4, overflow: "hidden" }}>
+              <View style={{ height: 8, backgroundColor: theme.colors.border, borderRadius: 4, overflow: "hidden" }}>
                 <View
                   style={{
                     width: `${physicalNum}%`,
@@ -266,12 +268,12 @@ export default function ProjectDetails() {
             {/* Financial */}
             <View>
               <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 4 }}>
-                <Text style={{ fontSize: 14, color: "#666" }}>Financial Progress</Text>
+                <Text style={{ fontSize: 14, color: theme.colors.textSecondary }}>Financial Progress</Text>
                 <Text style={{ fontSize: 16, fontWeight: "700", color: getFinancialColor(financialNum) }}>
                   {financialNum}%
                 </Text>
               </View>
-              <View style={{ height: 8, backgroundColor: "#E0E0E0", borderRadius: 4, overflow: "hidden" }}>
+              <View style={{ height: 8, backgroundColor: theme.colors.border, borderRadius: 4, overflow: "hidden" }}>
                 <View
                   style={{
                     width: `${financialNum}%`,
@@ -288,20 +290,20 @@ export default function ProjectDetails() {
         {/* Progress Chart */}
         <View
           style={{
-            backgroundColor: "#FFFFFF",
+            backgroundColor: theme.colors.card,
             borderRadius: 16,
             padding: 20,
             marginBottom: 16,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
+            shadowOpacity: theme.isDark ? 0.3 : 0.08,
             shadowRadius: 8,
             elevation: 4,
           }}
         >
           <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-            <Ionicons name="stats-chart" size={20} color="#1E6FD9" />
-            <Text style={{ fontSize: 18, fontWeight: "bold", color: "#1a1a1a", marginLeft: 8 }}>
+            <Ionicons name="stats-chart" size={20} color={theme.colors.primary} />
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: theme.colors.text, marginLeft: 8 }}>
               Progress Over Time
             </Text>
           </View>
@@ -318,12 +320,12 @@ export default function ProjectDetails() {
             height={260}
             yAxisSuffix="%"
             chartConfig={{
-              backgroundColor: "#FFF",
-              backgroundGradientFrom: "#FFF",
-              backgroundGradientTo: "#FFF",
+              backgroundColor: theme.colors.card,
+              backgroundGradientFrom: theme.colors.card,
+              backgroundGradientTo: theme.colors.card,
               decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(0,0,0,${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0,0,0,${opacity})`,
+              color: (opacity = 1) => theme.isDark ? `rgba(248, 250, 252, ${opacity})` : `rgba(0,0,0,${opacity})`,
+              labelColor: (opacity = 1) => theme.isDark ? `rgba(248, 250, 252, ${opacity})` : `rgba(0,0,0,${opacity})`,
               propsForDots: { r: "5" },
             }}
             bezier
@@ -334,44 +336,46 @@ export default function ProjectDetails() {
         {/* Additional Details */}
         <View
           style={{
-            backgroundColor: "#FFFFFF",
+            backgroundColor: theme.colors.card,
             borderRadius: 16,
             padding: 20,
             marginBottom: 16,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
+            shadowOpacity: theme.isDark ? 0.3 : 0.08,
             shadowRadius: 8,
             elevation: 4,
           }}
         >
           <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-            <Ionicons name="information-circle" size={20} color="#1E6FD9" />
-            <Text style={{ fontSize: 18, fontWeight: "bold", color: "#1a1a1a", marginLeft: 8 }}>
+            <Ionicons name="information-circle" size={20} color={theme.colors.primary} />
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: theme.colors.text, marginLeft: 8 }}>
               Additional Details
             </Text>
           </View>
 
           <View style={{ marginBottom: 16 }}>
-            <Text style={{ fontSize: 13, color: "#666", marginBottom: 4 }}>Project Type</Text>
-            <Text style={{ fontSize: 15, color: "#333", fontWeight: "500" }}>Infrastructure Development</Text>
+            <Text style={{ fontSize: 13, color: theme.colors.textSecondary, marginBottom: 4 }}>Project Type</Text>
+            <Text style={{ fontSize: 15, color: theme.colors.text, fontWeight: "500" }}>Infrastructure Development</Text>
           </View>
 
           <View style={{ marginBottom: 16 }}>
-            <Text style={{ fontSize: 13, color: "#666", marginBottom: 4 }}>Implementing Agency</Text>
-            <Text style={{ fontSize: 15, color: "#333", fontWeight: "500" }}>
+            <Text style={{ fontSize: 13, color: theme.colors.textSecondary, marginBottom: 4 }}>Implementing Agency</Text>
+            <Text style={{ fontSize: 15, color: theme.colors.text, fontWeight: "500" }}>
               {Department}
             </Text>
           </View>
 
           <View style={{ marginBottom: 16 }}>
-            <Text style={{ fontSize: 13, color: "#666", marginBottom: 4 }}>Status</Text>
+            <Text style={{ fontSize: 13, color: theme.colors.textSecondary, marginBottom: 4 }}>Status</Text>
             <View
               style={{
                 paddingHorizontal: 12,
                 paddingVertical: 6,
                 borderRadius: 12,
-                backgroundColor: physicalNum === 100 ? "#E8F5E9" : "#FFF3E0",
+                backgroundColor: physicalNum === 100 ?
+                  (theme.isDark ? theme.colors.success + "20" : "#E8F5E9") :
+                  (theme.isDark ? theme.colors.warning + "20" : "#FFF3E0"),
                 alignSelf: "flex-start",
               }}
             >
@@ -379,7 +383,9 @@ export default function ProjectDetails() {
                 style={{
                   fontSize: 13,
                   fontWeight: "600",
-                  color: physicalNum === 100 ? "#2E7D32" : "#F57C00",
+                  color: physicalNum === 100 ?
+                    (theme.isDark ? theme.colors.success : "#2E7D32") :
+                    (theme.isDark ? theme.colors.warning : "#F57C00"),
                 }}
               >
                 {physicalNum === 100 ? "Completed" : "In Progress"}
@@ -388,8 +394,8 @@ export default function ProjectDetails() {
           </View>
 
           <View>
-            <Text style={{ fontSize: 13, color: "#666", marginBottom: 4 }}>Description</Text>
-            <Text style={{ fontSize: 15, color: "#333", lineHeight: 22 }}>
+            <Text style={{ fontSize: 13, color: theme.colors.textSecondary, marginBottom: 4 }}>Description</Text>
+            <Text style={{ fontSize: 15, color: theme.colors.text, lineHeight: 22 }}>
               This project aims to improve transportation infrastructure and connectivity,
               facilitating economic growth and regional development. The project includes
               construction of roads, bridges, and related facilities.
@@ -400,33 +406,33 @@ export default function ProjectDetails() {
         {/* Community Comments */}
         <View
           style={{
-            backgroundColor: "#FFFFFF",
+            backgroundColor: theme.colors.card,
             borderRadius: 16,
             padding: 20,
             marginBottom: 16,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
+            shadowOpacity: theme.isDark ? 0.3 : 0.08,
             shadowRadius: 8,
             elevation: 4,
           }}
         >
           <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-            <Ionicons name="chatbubble-ellipses" size={20} color="#1E6FD9" />
-            <Text style={{ fontSize: 18, fontWeight: "bold", color: "#1a1a1a", marginLeft: 8 }}>
+            <Ionicons name="chatbubble-ellipses" size={20} color={theme.colors.primary} />
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: theme.colors.text, marginLeft: 8 }}>
               Community Feedback
             </Text>
           </View>
 
           <TextInput
             placeholder="Share updates, concerns, or appreciation…"
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor={theme.colors.textSecondary}
             multiline
             value={commentInput}
             onChangeText={setCommentInput}
             style={{
               borderWidth: 1,
-              borderColor: "#E5E7EB",
+              borderColor: theme.colors.border,
               borderRadius: 14,
               padding: 12,
               fontSize: 14,
@@ -442,7 +448,7 @@ export default function ProjectDetails() {
             disabled={!commentInput.trim().length}
             style={{
               alignSelf: "flex-end",
-              backgroundColor: commentInput.trim() ? "#1E6FD9" : "#9CA3AF",
+              backgroundColor: commentInput.trim() ? theme.colors.primary : theme.colors.textSecondary,
               paddingHorizontal: 20,
               paddingVertical: 10,
               borderRadius: 999,
@@ -461,20 +467,20 @@ export default function ProjectDetails() {
         {/* Photo Uploads */}
         <View
           style={{
-            backgroundColor: "#FFFFFF",
+            backgroundColor: theme.colors.card,
             borderRadius: 16,
             padding: 20,
             marginBottom: 32,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
+            shadowOpacity: theme.isDark ? 0.3 : 0.08,
             shadowRadius: 8,
             elevation: 4,
           }}
         >
           <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-            <Ionicons name="camera" size={20} color="#1E6FD9" />
-            <Text style={{ fontSize: 18, fontWeight: "bold", color: "#1a1a1a", marginLeft: 8 }}>
+            <Ionicons name="camera" size={20} color={theme.colors.primary} />
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: theme.colors.text, marginLeft: 8 }}>
               Field Photos
             </Text>
           </View>
@@ -487,12 +493,12 @@ export default function ProjectDetails() {
               alignItems: "center",
               justifyContent: "center",
               borderWidth: 1,
-              borderColor: "#CBD5F5",
+              borderColor: theme.colors.primary + "40",
               borderStyle: "dashed",
               borderRadius: 16,
               paddingVertical: 18,
               marginBottom: 16,
-              backgroundColor: "#F8FAFF",
+              backgroundColor: theme.isDark ? theme.colors.surface : "#F8FAFF",
             }}
           >
             <Ionicons name="cloud-upload" size={22} color="#1E6FD9" />

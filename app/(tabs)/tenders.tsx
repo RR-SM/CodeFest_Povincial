@@ -10,8 +10,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { useTheme } from "../contexts/ThemeContext"
 
 const Tenders = () => {
+  const { theme } = useTheme();
+  const styles = getStyles(theme);
   const tenders = [
     {
       id: 'ring-road',
@@ -358,7 +361,7 @@ const Tenders = () => {
   }
 
   return (
-    <View style={styles.screen}>
+    <View style={[styles.screen, { backgroundColor: theme.colors.background }]}>
       {/* Modern Header with Gradient */}
       <LinearGradient
         colors={["#7C3AED", "#A855F7", "#C084FC"]}
@@ -389,12 +392,12 @@ const Tenders = () => {
               </Text>
             </View>
           </View>
-          <View style={{ 
-            backgroundColor: "rgba(255,255,255,0.2)", 
-            borderRadius: 16, 
+          <View style={{
+            backgroundColor: theme.isDark ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)",
+            borderRadius: 16,
             padding: 12,
             borderWidth: 1,
-            borderColor: "rgba(255,255,255,0.3)"
+            borderColor: theme.isDark ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)"
           }}>
             <Ionicons name="document-text" size={28} color="#FFFFFF" />
           </View>
@@ -402,8 +405,8 @@ const Tenders = () => {
       </LinearGradient>
 
       {/* Floating Search Bar */}
-      <View style={{ 
-        paddingHorizontal: 24, 
+      <View style={{
+        paddingHorizontal: 24,
         marginTop: -32,
         marginBottom: 20,
         zIndex: 100,
@@ -413,7 +416,7 @@ const Tenders = () => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            backgroundColor: "#FFFFFF",
+            backgroundColor: theme.colors.surface,
             borderRadius: 20,
             paddingHorizontal: 18,
             paddingVertical: 16,
@@ -427,19 +430,19 @@ const Tenders = () => {
           }}
         >
           <View style={{
-            backgroundColor: "#F5F3FF",
+            backgroundColor: theme.isDark ? theme.colors.secondary + "20" : "#F5F3FF",
             borderRadius: 12,
             padding: 8,
             marginRight: 12
           }}>
-            <Ionicons name="search" size={20} color="#7C3AED" />
+            <Ionicons name="search" size={20} color={theme.colors.secondary} />
           </View>
           <TextInput
             placeholder="Search government tenders..."
-            placeholderTextColor="#94A3B8"
+            placeholderTextColor={theme.colors.textSecondary}
             style={{
               flex: 1,
-              color: "#0F172A",
+              color: theme.colors.text,
               fontSize: 15,
               fontWeight: "500",
               paddingVertical: 4,
@@ -450,16 +453,16 @@ const Tenders = () => {
             autoCapitalize="none"
           />
           {searchQuery.length > 0 && (
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => setSearchQuery("")}
               style={{
-                backgroundColor: "#F1F5F9",
+                backgroundColor: theme.colors.border,
                 borderRadius: 10,
                 padding: 6,
                 marginLeft: 8
               }}
             >
-              <Ionicons name="close" size={18} color="#64748B" />
+              <Ionicons name="close" size={18} color={theme.colors.textSecondary} />
             </TouchableOpacity>
           )}
         </View>
@@ -468,7 +471,7 @@ const Tenders = () => {
         {searchQuery.length > 0 && (
           <View
             style={{
-              backgroundColor: "#FFFFFF",
+              backgroundColor: theme.colors.surface,
               borderRadius: 16,
               marginTop: 12,
               paddingVertical: 8,
@@ -478,7 +481,7 @@ const Tenders = () => {
               shadowRadius: 16,
               shadowOffset: { width: 0, height: 6 },
               borderWidth: 1,
-              borderColor: "#E2E8F0",
+              borderColor: theme.colors.border,
               maxHeight: 300,
             }}
           >
@@ -492,28 +495,28 @@ const Tenders = () => {
                     flexDirection: "row",
                     alignItems: "center",
                     borderBottomWidth: index === suggestions.length - 1 ? 0 : 1,
-                    borderBottomColor: "#F1F5F9",
+                    borderBottomColor: theme.colors.border,
                   }}
                   onPress={() => setSearchQuery(suggestion.title)}
                 >
                   <View style={{
-                    backgroundColor: "#F5F3FF",
+                    backgroundColor: theme.isDark ? theme.colors.secondary + "20" : "#F5F3FF",
                     borderRadius: 8,
                     padding: 6,
                     marginRight: 12
                   }}>
-                    <Ionicons name="document-text" size={16} color="#7C3AED" />
+                    <Ionicons name="document-text" size={16} color={theme.colors.secondary} />
                   </View>
-                  <Text style={{ color: "#0F172A", fontSize: 14, fontWeight: "500", flex: 1 }}>
+                  <Text style={{ color: theme.colors.text, fontSize: 14, fontWeight: "500", flex: 1 }}>
                     {suggestion.title}
                   </Text>
-                  <Ionicons name="arrow-forward" size={16} color="#94A3B8" />
+                  <Ionicons name="arrow-forward" size={16} color={theme.colors.textSecondary} />
                 </TouchableOpacity>
               ))
             ) : (
               <View style={{ paddingVertical: 16, paddingHorizontal: 16, alignItems: "center" }}>
-                <Ionicons name="search-outline" size={32} color="#CBD5E1" style={{ marginBottom: 8 }} />
-                <Text style={{ color: "#64748B", fontSize: 14, fontWeight: "500" }}>
+                <Ionicons name="search-outline" size={32} color={theme.colors.textSecondary} style={{ marginBottom: 8 }} />
+                <Text style={{ color: theme.colors.textSecondary, fontSize: 14, fontWeight: "500" }}>
                   No matching tenders found
                 </Text>
               </View>
@@ -542,7 +545,7 @@ const Tenders = () => {
             <Text style={styles.statValue}>{openCount}</Text>
             <Text style={styles.statLabel}>Open</Text>
           </LinearGradient>
-          
+
           <LinearGradient
             colors={["#10B981", "#059669"]}
             start={{ x: 0, y: 0 }}
@@ -553,7 +556,7 @@ const Tenders = () => {
             <Text style={styles.statValue}>{awardedCount}</Text>
             <Text style={styles.statLabel}>Awarded</Text>
           </LinearGradient>
-          
+
           <LinearGradient
             colors={["#F59E0B", "#D97706"]}
             start={{ x: 0, y: 0 }}
@@ -611,14 +614,14 @@ const Tenders = () => {
               <View style={{ flex: 1, marginRight: 12 }}>
                 <Text style={styles.cardTitle}>{tender.title}</Text>
                 <View style={{ flexDirection: "row", alignItems: "center", marginTop: 6 }}>
-                  <Ionicons name="business" size={14} color="#64748B" />
+                  <Ionicons name="business" size={14} color={theme.colors.textSecondary} />
                   <Text style={styles.cardMeta}>{tender.authority}</Text>
                 </View>
               </View>
               <View
                 style={[
                   styles.badgeBase,
-                  tender.status === 'Awarded' ? styles.badgeAwarded : 
+                  tender.status === 'Awarded' ? styles.badgeAwarded :
                   tender.status === 'Open' ? styles.badgeOpen : styles.badgePlanning,
                 ]}
               >
@@ -627,7 +630,7 @@ const Tenders = () => {
                         tender.status === 'Open' ? 'time' : 'calendar'} 
                   size={14} 
                   color={tender.status === 'Awarded' ? '#059669' : 
-                         tender.status === 'Open' ? '#2563EB' : '#D97706'} 
+                         tender.status === 'Open' ? '#2563EB' : '#7C3AED'} 
                   style={{ marginRight: 4 }}
                 />
                 <Text
@@ -675,7 +678,7 @@ const Tenders = () => {
             {tender.biddingCompanies.length > 0 && (
               <View style={styles.section}>
                 <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
-                  <Ionicons name="people" size={16} color="#64748B" />
+                  <Ionicons name="people" size={16} color={theme.colors.textSecondary} />
                   <Text style={styles.sectionLabel}>Bidding Companies</Text>
                 </View>
                 <View style={styles.chipRow}>
@@ -702,7 +705,7 @@ const Tenders = () => {
             {/* Footer */}
             <View style={[styles.footerRow, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Ionicons name="calendar" size={16} color="#64748B" style={{ marginRight: 6 }} />
+                <Ionicons name="calendar" size={16} color={theme.colors.textSecondary} style={{ marginRight: 6 }} />
                 <View>
                   <Text style={styles.deadlineLabel}>Deadline</Text>
                   <Text style={styles.deadlineValue}>{tender.deadline}</Text>
@@ -723,14 +726,14 @@ const Tenders = () => {
   )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (theme: any) => StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F5F7FA',
+    backgroundColor: 'transparent',
   },
   container: {
     flex: 1,
-    backgroundColor: '#F5F7FA',
+    backgroundColor: 'transparent',
   },
   content: {
     paddingHorizontal: 20,
@@ -767,13 +770,13 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: theme.colors.card,
     borderRadius: 20,
     padding: 20,
     marginBottom: 20,
     elevation: 3,
     shadowColor: '#000',
-    shadowOpacity: 0.08,
+    shadowOpacity: theme.isDark ? 0.3 : 0.08,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
   },
@@ -793,25 +796,25 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 17,
     fontWeight: '700',
-    color: '#111827',
+    color: theme.colors.text,
     lineHeight: 24,
   },
   badgeAwarded: {
-    backgroundColor: '#DCFCE7',
+    backgroundColor: theme.isDark ? theme.colors.success + '20' : '#DCFCE7',
   },
   badgeOpen: {
-    backgroundColor: '#DBEAFE',
+    backgroundColor: theme.isDark ? theme.colors.primary + '20' : '#DBEAFE',
   },
   badgePlanning: {
     backgroundColor: '#FEF3C7',
   },
   badgeAwardedText: {
-    color: '#15803D',
+    color: theme.isDark ? theme.colors.success : '#15803D',
     fontSize: 11,
     fontWeight: '600',
   },
   badgeOpenText: {
-    color: '#1D4ED8',
+    color: theme.isDark ? theme.colors.primary : '#1D4ED8',
     fontSize: 11,
     fontWeight: '600',
   },
@@ -826,13 +829,13 @@ const styles = StyleSheet.create({
   },
   cardSubtitle: {
     fontSize: 14,
-    color: '#64748B',
+    color: theme.colors.textSecondary,
     lineHeight: 20,
     marginBottom: 16,
   },
   cardMeta: {
     fontSize: 13,
-    color: '#64748B',
+    color: theme.colors.textSecondary,
     marginLeft: 6,
   },
   rowSpaceBetween: {
@@ -843,20 +846,20 @@ const styles = StyleSheet.create({
   },
   smallLabel: {
     fontSize: 12,
-    color: '#64748B',
+    color: theme.colors.textSecondary,
     marginLeft: 6,
     fontWeight: '500',
   },
   budgetValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#2563EB',
+    color: theme.colors.primary,
     marginTop: 4,
   },
   contractValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#7C3AED',
+    color: theme.colors.secondary,
     marginTop: 4,
   },
   section: {
@@ -865,7 +868,7 @@ const styles = StyleSheet.create({
   sectionLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#4B5563',
+    color: theme.colors.textSecondary,
     marginBottom: 8,
   },
   chipRow: {
@@ -873,7 +876,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   chip: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: theme.colors.border,
     borderRadius: 999,
     paddingHorizontal: 10,
     paddingVertical: 6,
@@ -882,7 +885,7 @@ const styles = StyleSheet.create({
   },
   chipText: {
     fontSize: 11,
-    color: '#4B5563',
+    color: theme.colors.textSecondary,
   },
   winnerChip: {
     backgroundColor: '#16A34A',
@@ -903,13 +906,13 @@ const styles = StyleSheet.create({
   },
   deadlineLabel: {
     fontSize: 11,
-    color: '#6B7280',
+    color: theme.colors.textSecondary,
   },
   deadlineValue: {
     marginTop: 2,
     fontSize: 13,
     fontWeight: '600',
-    color: '#111827',
+    color: theme.colors.text,
   },
   footerButtons: {
     flexDirection: 'row',
@@ -918,7 +921,7 @@ const styles = StyleSheet.create({
   secondaryButton: {
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: theme.colors.border,
     paddingHorizontal: 12,
     paddingVertical: 7,
     marginRight: 8,
@@ -926,11 +929,11 @@ const styles = StyleSheet.create({
   secondaryButtonText: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#111827',
+    color: theme.colors.text,
   },
   primaryButton: {
     borderRadius: 999,
-    backgroundColor: '#1D4ED8',
+    backgroundColor: theme.colors.primary,
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
@@ -943,9 +946,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 16,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: theme.isDark ? theme.colors.surface : '#F9FAFB',
     borderRadius: 12,
     padding: 12,
+    borderWidth: 1,
+    borderColor: theme.isDark ? theme.colors.border : 'transparent',
   },
   budgetItem: {
     flex: 1,
@@ -954,7 +959,7 @@ const styles = StyleSheet.create({
     width: 1,
     height: 40,
     backgroundColor: '#E5E7EB',
-    marginHorizontal: 8,
+    marginHorizontal: 12,
   },
   winnerSection: {
     flexDirection: 'row',
