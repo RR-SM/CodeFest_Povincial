@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "RRSM - CodeFest",
-    "slug": "rrsm-codefest",
+    "slug": "codefest",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -52,9 +52,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "4456ac84-419a-456b-bbfc-d54eb42122c2"
+        "projectId": "f29efafd-2ab6-483e-a0ec-ddc928bf4afb"
       }
     },
-    "owner": "sel_ashyn"
+    "owner": "rrsm"
   }
 }
