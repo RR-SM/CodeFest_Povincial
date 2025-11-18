@@ -430,14 +430,14 @@ const Budgets = () => {
             <Text style={styles.chartTitle}>Budget Allocation by Department</Text>
             <PieChart
               data={pieChartData}
-              width={screenWidth - 60}
+              width={screenWidth - 50}
               height={220}
               chartConfig={{
                 color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               }}
               accessor="population"
               backgroundColor="transparent"
-              paddingLeft="15"
+              paddingLeft="-4"
               absolute
             />
           </View>

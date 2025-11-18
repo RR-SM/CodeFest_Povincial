@@ -34,7 +34,7 @@ const TabIcon = ({ focused, children, label }: { focused: boolean; children: Rea
         </LinearGradient>
         <Text
           style={{
-            fontSize: 7,
+            fontSize: 5,
             fontWeight: "700",
             color: "#6366F1",
             marginTop: 4,
