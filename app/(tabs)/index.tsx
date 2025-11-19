@@ -10,6 +10,20 @@ export default function Home() {
   const router = useRouter();
   const { theme } = useTheme();
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning";
+    if (hour < 18) return "Good Afternoon";
+    return "Good Evening";
+  };
+
+  const getGreetingEmoji = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "👋";
+    if (hour < 18) return "☀️";
+    return "🌙";
+  };
+
   const quickStats = [
     { label: "Active Projects", value: "24", icon: "construct", color: "#3B82F6" },
     { label: "Total Budget", value: "₹203B", icon: "wallet", color: "#10B981" },
@@ -91,7 +105,7 @@ export default function Home() {
       >
         <View style={{ marginBottom: 20 }}>
           <Text style={{ fontSize: 28, fontWeight: "800", color: "#FFFFFF", marginBottom: 4 }}>
-            Good Morning! 👋
+            {getGreeting()}! {getGreetingEmoji()}
           </Text>
           <Text style={{ fontSize: 16, color: "#DBEAFE", fontWeight: "500" }}>
             Nepal Public Transparency Portal
