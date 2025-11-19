@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { useTheme } from "./contexts/ThemeContext";
 
@@ -77,8 +77,16 @@ export default function ProjectDetails() {
   ]);
   const [photos, setPhotos] = useState<string[]>([]);
   const [isPicking, setIsPicking] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Set to false to require login
+  const [pendingAction, setPendingAction] = useState<'comment' | 'photo' | null>(null);
 
   const handleAddComment = () => {
+    if (!isLoggedIn) {
+      setPendingAction('comment');
+      setShowAuthModal(true);
+      return;
+    }
     const trimmed = commentInput.trim();
     if (!trimmed) return;
     const newComment: Comment = {
@@ -91,7 +99,29 @@ export default function ProjectDetails() {
     setCommentInput("");
   };
 
+  const proceedWithComment = () => {
+    const trimmed = commentInput.trim();
+    if (!trimmed) return;
+    const newComment: Comment = {
+      id: Date.now().toString(),
+      author: "Guest User",
+      text: trimmed,
+      timestamp: new Date(),
+    };
+    setComments((prev) => [newComment, ...prev]);
+    setCommentInput("");
+  };
+
   const handlePickPhoto = async () => {
+    if (!isLoggedIn) {
+      setPendingAction('photo');
+      setShowAuthModal(true);
+      return;
+    }
+    await pickPhoto();
+  };
+
+  const pickPhoto = async () => {
     if (isPicking) return;
     setIsPicking(true);
     try {
@@ -111,6 +141,17 @@ export default function ProjectDetails() {
     } finally {
       setIsPicking(false);
     }
+  };
+
+  const handleMaybeLater = () => {
+    setShowAuthModal(false);
+    // Execute the pending action
+    if (pendingAction === 'comment') {
+      proceedWithComment();
+    } else if (pendingAction === 'photo') {
+      pickPhoto();
+    }
+    setPendingAction(null);
   };
 
   const readableDate = (date: Date) =>
@@ -430,13 +471,18 @@ export default function ProjectDetails() {
             multiline
             value={commentInput}
             onChangeText={setCommentInput}
+            onFocus={() => {
+              if (!isLoggedIn) {
+                setShowAuthModal(true);
+              }
+            }}
             style={{
               borderWidth: 1,
               borderColor: theme.colors.border,
               borderRadius: 14,
               padding: 12,
               fontSize: 14,
-              color: "#111827",
+              color: theme.colors.text,
               marginBottom: 10,
               minHeight: 80,
               textAlignVertical: "top",
@@ -516,6 +562,114 @@ export default function ProjectDetails() {
           )}
         </View>
       </ScrollView>
+
+      {/* Authentication Modal */}
+      <Modal
+        visible={showAuthModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowAuthModal(false)}
+      >
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0,0,0,0.6)",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          activeOpacity={1}
+          onPress={() => setShowAuthModal(false)}
+        >
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              backgroundColor: theme.colors.card,
+              borderRadius: 24,
+              padding: 32,
+              width: "85%",
+              maxWidth: 400,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 10 },
+              shadowOpacity: 0.3,
+              shadowRadius: 20,
+              elevation: 10,
+            }}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <View style={{ alignItems: "center", marginBottom: 24 }}>
+              <View
+                style={{
+                  width: 64,
+                  height: 64,
+                  borderRadius: 32,
+                  backgroundColor: theme.colors.primary + "15",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: 16,
+                }}
+              >
+                <Ionicons name="lock-closed" size={32} color={theme.colors.primary} />
+              </View>
+              <Text style={{ fontSize: 24, fontWeight: "700", color: theme.colors.text, marginBottom: 8 }}>
+                Sign In Required
+              </Text>
+              <Text style={{ fontSize: 14, color: theme.colors.textSecondary, textAlign: "center", lineHeight: 20 }}>
+                Create an account or sign in to continue and participate in community discussions
+              </Text>
+            </View>
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: theme.colors.primary,
+                borderRadius: 12,
+                paddingVertical: 14,
+                alignItems: "center",
+                marginBottom: 12,
+              }}
+              onPress={() => {
+                setShowAuthModal(false);
+                router.push("/signup");
+              }}
+            >
+              <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "600" }}>
+                Create Account
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: theme.colors.surface,
+                borderRadius: 12,
+                paddingVertical: 14,
+                alignItems: "center",
+                marginBottom: 12,
+                borderWidth: 1,
+                borderColor: theme.colors.border,
+              }}
+              onPress={() => {
+                setShowAuthModal(false);
+                router.push("/signin");
+              }}
+            >
+              <Text style={{ color: theme.colors.text, fontSize: 16, fontWeight: "600" }}>
+                Sign In
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                paddingVertical: 12,
+                alignItems: "center",
+              }}
+              onPress={handleMaybeLater}
+            >
+              <Text style={{ color: theme.colors.textSecondary, fontSize: 14, fontWeight: "500" }}>
+                Maybe Later
+              </Text>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 }

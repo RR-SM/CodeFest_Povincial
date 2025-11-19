@@ -3,18 +3,20 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
 import "../globals.css";
 
 export default function Home() {
   const router = useRouter();
   const { theme } = useTheme();
+  const { t } = useLanguage();
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return "Good Morning";
-    if (hour < 18) return "Good Afternoon";
-    return "Good Evening";
+    if (hour < 12) return t("goodMorning");
+    if (hour < 18) return t("goodAfternoon");
+    return t("goodEvening");
   };
 
   const getGreetingEmoji = () => {
@@ -25,44 +27,44 @@ export default function Home() {
   };
 
   const quickStats = [
-    { label: "Active Projects", value: "24", icon: "construct", color: "#3B82F6" },
-    { label: "Total Budget", value: "₹203B", icon: "wallet", color: "#10B981" },
-    { label: "Open Tenders", value: "12", icon: "document-text", color: "#8B5CF6" },
-    { label: "Completion Rate", value: "68%", icon: "trending-up", color: "#F59E0B" },
+    { label: t("activeProjects"), value: "24", icon: "construct", color: "#3B82F6" },
+    { label: t("totalBudget"), value: "₹203B", icon: "wallet", color: "#10B981" },
+    { label: t("openTenders"), value: "12", icon: "document-text", color: "#8B5CF6" },
+    { label: t("completionRate"), value: "68%", icon: "trending-up", color: "#F59E0B" },
   ];
 
   const shortcuts = [
     {
-      title: "Budget Tracker",
-      subtitle: "Monitor government spending",
+      title: t("budgetTracker"),
+      subtitle: t("monitorSpending"),
       icon: "wallet",
       color: "#10B981",
       route: "/budget",
-      stats: "₹203B Total"
+      stats: "₹203B " + t("total")
     },
     {
-      title: "Projects",
-      subtitle: "Track infrastructure progress",
+      title: t("projects"),
+      subtitle: t("trackProgress"),
       icon: "construct",
       color: "#3B82F6",
       route: "/projects",
-      stats: "24 Active"
+      stats: "24 " + t("activeProjects")
     },
     {
-      title: "Tenders",
-      subtitle: "Government procurement",
+      title: t("tenders"),
+      subtitle: t("govProcurement"),
       icon: "document-text",
       color: "#8B5CF6",
       route: "/tenders",
-      stats: "12 Open"
+      stats: "12 " + t("openTenders")
     },
     {
-      title: "Settings",
-      subtitle: "App preferences",
+      title: t("settings"),
+      subtitle: t("appPreferences"),
       icon: "settings",
       color: "#6B7280",
       route: "/settings",
-      stats: "Configure"
+      stats: t("configure")
     }
   ];
 
@@ -108,7 +110,7 @@ export default function Home() {
             {getGreeting()}! {getGreetingEmoji()}
           </Text>
           <Text style={{ fontSize: 16, color: "#DBEAFE", fontWeight: "500" }}>
-            Nepal Public Transparency Portal
+            {t("portalName")}
           </Text>
         </View>
 
@@ -153,7 +155,7 @@ export default function Home() {
         {/* Quick Actions */}
         <View style={{ paddingHorizontal: 24, paddingTop: 24 }}>
           <Text style={{ fontSize: 20, fontWeight: "700", color: theme.colors.text, marginBottom: 16 }}>
-            Quick Actions
+            {t("quickActions")}
           </Text>
 
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12 }}>
@@ -208,11 +210,11 @@ export default function Home() {
         <View style={{ paddingHorizontal: 24, paddingTop: 32 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
             <Text style={{ fontSize: 20, fontWeight: "700", color: theme.colors.text }}>
-              Recent Activity
+              {t("recentActivity")}
             </Text>
             <TouchableOpacity>
               <Text style={{ fontSize: 14, fontWeight: "600", color: "#3B82F6" }}>
-                View All
+                {t("viewAll")}
               </Text>
             </TouchableOpacity>
           </View>
@@ -271,7 +273,7 @@ export default function Home() {
         {/* Featured Insight */}
         <View style={{ paddingHorizontal: 24, paddingTop: 32 }}>
           <Text style={{ fontSize: 20, fontWeight: "700", color: theme.colors.text, marginBottom: 16 }}>
-            Today's Insight
+            {t("todaysInsight")}
           </Text>
 
           <LinearGradient
@@ -291,7 +293,7 @@ export default function Home() {
             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
               <Ionicons name="trending-up" size={24} color="#FFFFFF" />
               <Text style={{ fontSize: 16, fontWeight: "600", color: "#FFFFFF", marginLeft: 8 }}>
-                Budget Utilization
+                {t("budgetUtilization")}
               </Text>
             </View>
             <Text style={{ fontSize: 32, fontWeight: "800", color: "#FFFFFF", marginBottom: 4 }}>
@@ -312,7 +314,7 @@ export default function Home() {
               }}
             >
               <Text style={{ fontSize: 12, fontWeight: "600", color: "#FFFFFF" }}>
-                View Details
+                {t("viewDetails")}
               </Text>
             </TouchableOpacity>
           </LinearGradient>
