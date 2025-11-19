@@ -430,14 +430,14 @@ const Budgets = () => {
             <Text style={styles.chartTitle}>Budget Allocation by Department</Text>
             <PieChart
               data={pieChartData}
-              width={screenWidth - 50}
+              width={screenWidth - 40}
               height={220}
               chartConfig={{
                 color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               }}
               accessor="population"
               backgroundColor="transparent"
-              paddingLeft="-4"
+              paddingLeft="-3"
               absolute
             />
           </View>
@@ -722,6 +722,7 @@ const getStyles = (theme: any) => StyleSheet.create({
     backgroundColor: theme.colors.card,
     borderRadius: 12,
     padding: 16,
+    paddingLeft: 5,
     marginBottom: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -734,6 +735,7 @@ const getStyles = (theme: any) => StyleSheet.create({
     fontWeight: '600',
     color: theme.colors.text,
     marginBottom: 12,
+    paddingLeft: 10,
   },
   chart: {
     borderRadius: 12,
@@ -897,13 +899,13 @@ const getStyles = (theme: any) => StyleSheet.create({
   },
   projectStatLabel: {
     fontSize: 12,
-    color: '#6b7280',
+    color: theme.colors.textSecondary,
     marginBottom: 4,
   },
   projectStatValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#111827',
+    color: theme.colors.text,
   },
   projectProgress: {
     flexDirection: 'row',
@@ -923,11 +925,11 @@ const getStyles = (theme: any) => StyleSheet.create({
   completionText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#111827',
+    color: theme.colors.text,
   },
   completionLabel: {
     fontSize: 12,
-    color: '#6b7280',
+    color: theme.colors.textSecondary,
     marginTop: 4,
   },
 });
