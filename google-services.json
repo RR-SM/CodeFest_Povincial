@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "401978582208",
+    "project_id": "rrsm-codefest",
+    "storage_bucket": "rrsm-codefest.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401978582208:android:72acc98de61da2ff353925",
+        "android_client_info": {
+          "package_name": "com.codefest.provincial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA51jfGMGn0jOPHKFh4IItYX3a0YUGiAvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

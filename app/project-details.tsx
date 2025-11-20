@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { Dimensions, Image, Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { useTheme } from "./contexts/ThemeContext";
+import { useUser } from "./contexts/UserContext";
 
 import "./globals.css";
 
@@ -17,6 +18,7 @@ type Comment = {
 
 export default function ProjectDetails() {
   const { theme } = useTheme();
+  const { isLoggedIn } = useUser();
   const router = useRouter();
   const params = useLocalSearchParams();
 
@@ -78,7 +80,6 @@ export default function ProjectDetails() {
   const [photos, setPhotos] = useState<string[]>([]);
   const [isPicking, setIsPicking] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Set to false to require login
   const [pendingAction, setPendingAction] = useState<'comment' | 'photo' | null>(null);
 
   const handleAddComment = () => {

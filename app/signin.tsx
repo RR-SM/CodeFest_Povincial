@@ -15,8 +15,9 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     if (!email.trim() || !email.includes("@")) {
       Alert.alert("Error", "Please enter a valid email address");
       return;
@@ -26,17 +27,15 @@ export default function SignIn() {
       return;
     }
 
-    signIn(email, password);
-    Alert.alert(
-      "Success",
-      "Signed in successfully!",
-      [
-        {
-          text: "OK",
-          onPress: () => router.push("/(tabs)"),
-        },
-      ]
-    );
+    setIsLoading(true);
+    try {
+      await signIn(email, password);
+      router.push("/(tabs)");
+    } catch (error: any) {
+      Alert.alert("Sign In Failed", error.message || "Please check your credentials and try again");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -186,8 +185,9 @@ export default function SignIn() {
           {/* Sign In Button */}
           <TouchableOpacity
             onPress={handleSignIn}
+            disabled={isLoading}
             style={{
-              backgroundColor: theme.colors.primary,
+              backgroundColor: isLoading ? theme.colors.border : theme.colors.primary,
               borderRadius: 12,
               paddingVertical: 16,
               alignItems: "center",
@@ -200,7 +200,7 @@ export default function SignIn() {
             }}
           >
             <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "700" }}>
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </Text>
           </TouchableOpacity>
 

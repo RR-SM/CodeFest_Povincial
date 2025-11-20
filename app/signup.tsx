@@ -23,7 +23,7 @@ export default function SignUp() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     // Validation
     if (!formData.fullName.trim()) {
       Alert.alert("Error", "Please enter your full name");
@@ -50,24 +50,27 @@ export default function SignUp() {
       return;
     }
 
-    // Success
-    signUp({
-      fullName: formData.fullName,
-      email: formData.email,
-      phone: formData.phone,
-      password: formData.password,
-    });
+    try {
+      await signUp({
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+      });
 
-    Alert.alert(
-      "Success",
-      "Account created successfully!",
-      [
-        {
-          text: "OK",
-          onPress: () => router.push("/(tabs)"),
-        },
-      ]
-    );
+      Alert.alert(
+        "Success",
+        "Account created successfully!",
+        [
+          {
+            text: "OK",
+            onPress: () => router.push("/(tabs)"),
+          },
+        ]
+      );
+    } catch (error: any) {
+      Alert.alert("Sign Up Failed", error.message || "Please try again");
+    }
   };
 
   return (
