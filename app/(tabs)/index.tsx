@@ -27,10 +27,10 @@ export default function Home() {
   };
 
   const quickStats = [
-    { label: t("activeProjects"), value: "24", icon: "construct", color: "#3B82F6" },
-    { label: t("totalBudget"), value: "₹203B", icon: "wallet", color: "#10B981" },
-    { label: t("openTenders"), value: "12", icon: "document-text", color: "#8B5CF6" },
-    { label: t("completionRate"), value: "68%", icon: "trending-up", color: "#F59E0B" },
+    { label: t("activeProjects"), value: "13", icon: "construct", color: "#3B82F6" },
+    { label: t("totalBudget"), value: "NPR 398B", icon: "wallet", color: "#10B981" },
+    { label: t("openTenders"), value: "13", icon: "document-text", color: "#8B5CF6" },
+    { label: t("completionRate"), value: "58%", icon: "trending-up", color: "#F59E0B" },
   ];
 
   const shortcuts = [
@@ -40,7 +40,7 @@ export default function Home() {
       icon: "wallet",
       color: "#10B981",
       route: "/budget",
-      stats: "₹203B " + t("total")
+      stats: "NPR 398B " + t("total")
     },
     {
       title: t("projects"),
@@ -48,7 +48,7 @@ export default function Home() {
       icon: "construct",
       color: "#3B82F6",
       route: "/projects",
-      stats: "24 " + t("activeProjects")
+      stats: "13 " + t("activeProjects")
     },
     {
       title: t("tenders"),
@@ -56,7 +56,7 @@ export default function Home() {
       icon: "document-text",
       color: "#8B5CF6",
       route: "/tenders",
-      stats: "12 " + t("openTenders")
+      stats: "13 " + t("openTenders")
     },
     {
       title: "Transparency Reports",
@@ -64,8 +64,11 @@ export default function Home() {
       icon: "shield-checkmark",
       color: "#DC2626",
       route: "/transparency-reports",
-      stats: "8 Reports"
-    },
+      stats: "8 Key Reports"
+    }
+  ];
+
+  const advancedTools = [
     {
       title: "Legal Framework",
       subtitle: "Laws & Regulations",
@@ -75,12 +78,20 @@ export default function Home() {
       stats: "View Laws"
     },
     {
-      title: t("settings"),
-      subtitle: t("appPreferences"),
-      icon: "settings",
-      color: "#6B7280",
-      route: "/settings",
-      stats: t("configure")
+      title: "AI Insights",
+      subtitle: "ML-Powered Analysis",
+      icon: "sparkles",
+      color: "#6366F1",
+      route: "/ai-insights",
+      stats: "4 Anomalies"
+    },
+    {
+      title: "Report Issue",
+      subtitle: "Submit Concerns",
+      icon: "alert-circle",
+      color: "#EF4444",
+      route: "/report-issue",
+      stats: "Report Now"
     }
   ];
 
@@ -88,21 +99,21 @@ export default function Home() {
     {
       title: "Kathmandu-Terai Fast Track",
       type: "Project Update",
-      status: "68% Complete",
+      status: "43.6% Complete",
       time: "2 hours ago",
       color: "#3B82F6"
     },
     {
-      title: "Mid-Hill Highway Tender",
+      title: "Upper Karnali Hydropower",
       type: "New Tender",
       status: "Open for Bids",
       time: "5 hours ago",
       color: "#8B5CF6"
     },
     {
-      title: "Health Budget Allocation",
-      type: "Budget Update",
-      status: "₹45M Released",
+      title: "Pokhara Airport Development",
+      type: "Project Milestone",
+      status: "100% Complete",
       time: "1 day ago",
       color: "#10B981"
     }
@@ -248,6 +259,61 @@ export default function Home() {
           </View>
         </View>
 
+        {/* Advanced Tools */}
+        <View style={{ paddingHorizontal: 24, paddingTop: 32 }}>
+          <Text style={{ fontSize: 20, fontWeight: "700", color: theme.colors.text, marginBottom: 16 }}>
+            Features
+          </Text>
+
+          <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+            {advancedTools.map((tool, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => router.push(tool.route as any)}
+                style={{
+                  width: "48%",
+                  backgroundColor: theme.colors.card,
+                  borderRadius: 20,
+                  padding: 20,
+                  marginBottom: 12,
+                  shadowColor: theme.isDark ? "#000" : "#000",
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: theme.isDark ? 0.3 : 0.08,
+                  shadowRadius: 12,
+                  elevation: 4,
+                }}
+              >
+                <View
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 24,
+                    backgroundColor: tool.color + "15",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 12,
+                  }}
+                >
+                  <Ionicons
+                    name={tool.icon as any}
+                    size={24}
+                    color={tool.color}
+                  />
+                </View>
+                <Text style={{ fontSize: 16, fontWeight: "600", color: theme.colors.text, marginBottom: 4 }}>
+                  {tool.title}
+                </Text>
+                <Text style={{ fontSize: 12, color: theme.colors.textSecondary, marginBottom: 8 }}>
+                  {tool.subtitle}
+                </Text>
+                <Text style={{ fontSize: 12, fontWeight: "600", color: tool.color }}>
+                  {tool.stats}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
         {/* Recent Activity */}
         <View style={{ paddingHorizontal: 24, paddingTop: 32 }}>
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
@@ -339,10 +405,10 @@ export default function Home() {
               </Text>
             </View>
             <Text style={{ fontSize: 32, fontWeight: "800", color: "#FFFFFF", marginBottom: 4 }}>
-              73.2%
+              58.3%
             </Text>
             <Text style={{ fontSize: 14, color: "#E9D5FF", marginBottom: 16 }}>
-              Government budget utilization is up 5.2% from last quarter, showing improved efficiency in public spending.
+              Government budget utilization for FY 2024/25 shows steady progress across major infrastructure projects.
             </Text>
             <TouchableOpacity
               style={{
@@ -382,11 +448,10 @@ export default function Home() {
           elevation: 8,
         }}
         onPress={() => {
-          // Add vote functionality here
           alert("Vote feature coming soon!");
         }}
       >
-        <Ionicons name="thumbs-up" size={28} color="#FFFFFF" />
+        <Ionicons name="people-outline" size={28} color="#FFFFFF" />
       </TouchableOpacity>
     </View>
   );

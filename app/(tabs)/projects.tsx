@@ -218,7 +218,7 @@ export default function Projects() {
         endDate: "April 2021",
         Department: "Melamchi Water Supply Development Board (MWSDB)",
         image:
-          "https://imgs.search.brave.com/3Nyj3La35t5x8QDqtV-AfGAPSuuA04Lh_vdNCSohVeg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMtYXBpLmthdGhtYW5kdXBvc3QuY29tL3RodW1iLnBocD9z/cmM9aHR0cHM6Ly9h/c3NldHMtY2RuLmth/dGhtYW5kdXBvc3Qu/Y29tL3VwbG9hZHMv/c291cmNlL25ld3Mv/MjAyMi9uZXdzL21l/bGFtY2hpLTE2NzA2/Mzk0MTUucG5nJnc9/OTAwJmhlaWdodD02/MDE",
+          "https://english.pardafas.com/wp-content/uploads/2025/11/Melamchi-079.jpg",
       },
       {
         id: 3,
@@ -257,7 +257,7 @@ export default function Projects() {
         startDate: "Feb 2020",
         endDate: "June 2026",
         Department: "Nepal Railways",
-        image: "https://imgs.search.brave.com/9wQKqN0-W8qvvYYxVQ-FyxP-kL0c0nw8QH_-jP9PXEU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/aXRkYS5jb20vY20v/c2VydmljZXMvaW1h/Z2VzL2luZGlhLWlv/dnQtcmFpbHdheS1s/aW5rLmpwZw",
+        image: "https://republicaimg.nagariknewscdn.com/shared/web/uploads/media/railway_20220707153953.jpg",
       },
       {
         id: 6,
@@ -270,7 +270,7 @@ export default function Projects() {
         startDate: "Sept 2019",
         endDate: "Dec 2027",
         Department: "Nepal Electricity Authority (NEA)",
-        image: "https://imgs.search.brave.com/6YMl4xI0qhLQV5g-MZI3qXPxqLVyFYG45TxRsGQJZgE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/dGhlZHJhbWEuY29t/L3Jlc2l6ZS9jb250/ZW50LWltYWdlcy9y/ZXNpemluZy91L2Fh/LzIwMjIvMDQvMjAy/MjA0LTEyMDAw/MDB4MzYwMDAwLWth/cm5hbGktMTY0OTU5/NTkzOS5qcGc",
+        image: "https://www.cmgassets.com/s3fs-public/styles/opengraph/public/2025-01/pexels-denitsa-kireva-2915302-14594595.jpg?h=920929c4&itok=kJTJkgrx",
       },
       {
         id: 7,
@@ -283,7 +283,7 @@ export default function Projects() {
         startDate: "Aug 2021",
         endDate: "Dec 2025",
         Department: "Civil Aviation Authority of Nepal (CAAN)",
-        image: "https://imgs.search.brave.com/wKnJ0h7xQ8qLGPyQX0QW2M1U7vjLsOyxFYaU6IkUHQo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuYXRsdGFzLm5v/d3EvY2hhcmJlbGwu/anBn",
+        image: "https://english.onlinekhabar.com/wp-content/uploads/2024/11/TIA-Construction-sketch-2048x1154-1.jpg",
       },
       {
         id: 8,
@@ -296,7 +296,7 @@ export default function Projects() {
         startDate: "Mar 2019",
         endDate: "Mar 2024",
         Department: "Pokhara Metropolitan City",
-        image: "https://imgs.search.brave.com/POdkTL4sJyNx3AZRvKyM5rr8nXAeQrvlCTWFW1KL8Yw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/aGVyYWxkLmNvbS5u/cC91cGxvYWRzL2lt/YWdlcy9jb2xsZWN0/aW9ucy8yMDIyLzAz/L2hlcmFsZC5jb20u/bmUuMjAyMjAzMTcw/MjI1MTUuanBn",
+        image: "https://www.ad-hzm.co.jp/english/works/assets_c/2024/10/works_gl_0266_01-thumb-autox400-2792.jpg",
       },
       {
         id: 9,
@@ -309,7 +309,7 @@ export default function Projects() {
         startDate: "June 2020",
         endDate: "Dec 2026",
         Department: "Department of Roads",
-        image: "https://imgs.search.brave.com/yZvj3R3T1pK2qZ0d3gJlM5vK6vLsQp0vJ7jP8fKjV_w/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMuYnJpdGFubmlj/YS5jb20vaW1hZ2Vz/L0luZGlhbjEwMTAx/MDEuanBn",
+        image: "https://assets-api.kathmandupost.com/thumb.php?src=https://assets-cdn.kathmandupost.com/uploads/source/news/2019/miscellaneous/road-2-by-Rajendra-Manandhar.jpg&w=900&height=601",
       },
       {
         id: 10,
@@ -322,20 +322,43 @@ export default function Projects() {
         startDate: "Jan 2018",
         endDate: "Dec 2025",
         Department: "Kathmandu Upatyaka Khanepani Limited (KUKL)",
-        image: "https://imgs.search.brave.com/L8Q3Z0R5qU3aT0v1K9nP2rV4sM5lY8xW3nO1fJ2eK_k/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/dGhlZHJhbWEuY29t/L3Jlc2l6ZS9jb250/ZW50LWltYWdlcy9y/ZXNpemluZy91L2Lm/bG9ncy9teWJsb2cv/MjAxOS8wMi8yMDE5/MDIyNzEwMDAwMDEt/a2F0aG1hbmR1LXdh/dGVyLmpwZw",
+        image: "https://i0.wp.com/www.urbanwateratlas.com/wp-content/uploads/2023/04/older-circular-secondary-sedimentary-system.jpg?resize=800%2C450&ssl=1",
       },
     ],
     []
   );
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("all");
   const lastScrollOffset = useRef(0);
 
+  const districts = [
+    "All Districts",
+    "Kathmandu",
+    "Pokhara",
+    "Chitwan",
+    "Koshi",
+    "Jiri",
+  ];
+
   const filteredProjects = useMemo(() => {
+    let filtered = projects;
+
+    // Filter by district
+    if (selectedDistrict !== "all") {
+      filtered = filtered.filter((project) =>
+        project.title.toLowerCase().includes(selectedDistrict.toLowerCase())
+      );
+    }
+
+    // Filter by search query
     const value = searchQuery.trim().toLowerCase();
-    if (!value) return projects;
-    return projects.filter((project) => project.title.toLowerCase().includes(value));
-  }, [projects, searchQuery]);
+    if (value) {
+      filtered = filtered.filter((project) => project.title.toLowerCase().includes(value));
+    }
+
+    return filtered;
+  }, [projects, searchQuery, selectedDistrict]);
 
   const suggestions = useMemo(() => {
     const value = searchQuery.trim().toLowerCase();
@@ -519,6 +542,89 @@ export default function Projects() {
             </View>
           )}
         </View>
+
+      {/* Location Filter & Action Buttons */}
+      <View style={{ paddingHorizontal: 24, marginBottom: 16 }}>
+        {/* District Filter */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ marginBottom: 12 }}
+          contentContainerStyle={{ gap: 8 }}
+        >
+          {districts.map((district, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => setSelectedDistrict(index === 0 ? "all" : district.toLowerCase())}
+              style={{
+                backgroundColor: (index === 0 ? selectedDistrict === "all" : selectedDistrict === district.toLowerCase()) ? "#3B82F6" : theme.colors.card,
+                paddingHorizontal: 14,
+                paddingVertical: 8,
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: (index === 0 ? selectedDistrict === "all" : selectedDistrict === district.toLowerCase()) ? "#3B82F6" : theme.colors.border,
+              }}
+            >
+              <Text style={{
+                fontSize: 12,
+                fontWeight: "600",
+                color: (index === 0 ? selectedDistrict === "all" : selectedDistrict === district.toLowerCase()) ? "#FFFFFF" : theme.colors.text
+              }}>
+                {district}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        {/* Action Buttons */}
+        <View style={{ flexDirection: "row", gap: 10 }}>
+          <TouchableOpacity
+            onPress={() => router.push("/compare-projects")}
+            style={{
+              flex: 1,
+              backgroundColor: "#7C3AED",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingVertical: 12,
+              borderRadius: 12,
+              shadowColor: "#7C3AED",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+              elevation: 4,
+            }}
+          >
+            <Ionicons name="git-compare" size={18} color="#FFFFFF" />
+            <Text style={{ fontSize: 13, fontWeight: "700", color: "#FFFFFF", marginLeft: 6 }}>
+              Compare
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => router.push("/report-issue")}
+            style={{
+              flex: 1,
+              backgroundColor: "#DC2626",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingVertical: 12,
+              borderRadius: 12,
+              shadowColor: "#DC2626",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+              elevation: 4,
+            }}
+          >
+            <Ionicons name="megaphone" size={18} color="#FFFFFF" />
+            <Text style={{ fontSize: 13, fontWeight: "700", color: "#FFFFFF", marginLeft: 6 }}>
+              Report Issue
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
 
       {/* Project Cards */}
       <ScrollView
