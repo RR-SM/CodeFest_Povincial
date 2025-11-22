@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Modal, ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Modal, ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { useUser } from "../contexts/UserContext";
@@ -367,7 +367,15 @@ export default function Settings() {
               marginBottom: 16,
             }}
           >
-            <Ionicons name="shield-checkmark" size={30} color={theme.colors.primary} />
+            <Image
+                          source={require("../../assets/images/logo.png")}
+                          style={{
+                            width: 32,
+                            height: 32,
+                            borderRadius: 50,
+                            resizeMode: "contain",
+                          }}
+                        />
           </View>
 
           <Text style={{ fontSize: 18, fontWeight: "700", color: theme.colors.text, marginBottom: 4 }}>

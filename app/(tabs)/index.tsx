@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
 import "../globals.css";
@@ -105,13 +105,38 @@ export default function Home() {
           paddingHorizontal: 24,
         }}
       >
-        <View style={{ marginBottom: 20 }}>
-          <Text style={{ fontSize: 28, fontWeight: "800", color: "#FFFFFF", marginBottom: 4 }}>
-            {getGreeting()}! {getGreetingEmoji()}
-          </Text>
-          <Text style={{ fontSize: 16, color: "#DBEAFE", fontWeight: "500" }}>
-            {t("portalName")}
-          </Text>
+        <View style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 20 }}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 28, fontWeight: "800", color: "#FFFFFF", marginBottom: 4 }}>
+              {getGreeting()}! {getGreetingEmoji()}
+            </Text>
+            <Text style={{ fontSize: 16, color: "#DBEAFE", fontWeight: "500" }}>
+              {t("portalName")}
+            </Text>
+          </View>
+
+          {/* Logo */}
+          <View style={{
+            width: 48,
+            height: 48,
+            borderRadius: 24,
+            backgroundColor: "rgba(255,255,255,0.15)",
+            alignItems: "center",
+            justifyContent: "center",
+            borderWidth: 2,
+            borderColor: "rgba(255,255,255,0.2)",
+            overflow: "hidden",
+          }}>
+            <Image
+              source={require("../../assets/images/logo.png")}
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: 50,
+                resizeMode: "contain",
+              }}
+            />
+          </View>
         </View>
 
         {/* Quick Stats Row */}
@@ -320,6 +345,32 @@ export default function Home() {
           </LinearGradient>
         </View>
       </ScrollView>
+
+      {/* Floating Vote Button */}
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          bottom: 90,
+          right: 20,
+          width: 64,
+          height: 64,
+          borderRadius: 32,
+          backgroundColor: "#3B82F6",
+          alignItems: "center",
+          justifyContent: "center",
+          shadowColor: "#3B82F6",
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.4,
+          shadowRadius: 16,
+          elevation: 8,
+        }}
+        onPress={() => {
+          // Add vote functionality here
+          alert("Vote feature coming soon!");
+        }}
+      >
+        <Ionicons name="thumbs-up" size={28} color="#FFFFFF" />
+      </TouchableOpacity>
     </View>
   );
 }

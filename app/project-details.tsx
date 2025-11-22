@@ -445,6 +445,110 @@ export default function ProjectDetails() {
           </View>
         </View>
 
+        {/* Budget Allocation Breakdown */}
+        <View
+          style={{
+            backgroundColor: theme.colors.card,
+            borderRadius: 16,
+            padding: 20,
+            marginBottom: 16,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: theme.isDark ? 0.3 : 0.08,
+            shadowRadius: 8,
+            elevation: 4,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+            <Ionicons name="pie-chart" size={20} color={theme.colors.primary} />
+            <Text style={{ fontSize: 18, fontWeight: "bold", color: theme.colors.text, marginLeft: 8 }}>
+              Budget Allocation
+            </Text>
+          </View>
+
+          <Text style={{ fontSize: 13, color: theme.colors.textSecondary, marginBottom: 16 }}>
+            Breakdown of how the project budget is allocated across different categories
+          </Text>
+
+          {/* Allocation Items */}
+          <View style={{ marginBottom: 12 }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 6 }}>
+              <Text style={{ fontSize: 14, color: theme.colors.text }}>Construction & Materials</Text>
+              <Text style={{ fontSize: 14, fontWeight: "600", color: "#3B82F6" }}>45%</Text>
+            </View>
+            <View style={{ height: 8, backgroundColor: theme.colors.border, borderRadius: 4, overflow: "hidden" }}>
+              <View style={{ width: "45%", height: "100%", backgroundColor: "#3B82F6", borderRadius: 4 }} />
+            </View>
+          </View>
+
+          <View style={{ marginBottom: 12 }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 6 }}>
+              <Text style={{ fontSize: 14, color: theme.colors.text }}>Labor & Workforce</Text>
+              <Text style={{ fontSize: 14, fontWeight: "600", color: "#10B981" }}>25%</Text>
+            </View>
+            <View style={{ height: 8, backgroundColor: theme.colors.border, borderRadius: 4, overflow: "hidden" }}>
+              <View style={{ width: "25%", height: "100%", backgroundColor: "#10B981", borderRadius: 4 }} />
+            </View>
+          </View>
+
+          <View style={{ marginBottom: 12 }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 6 }}>
+              <Text style={{ fontSize: 14, color: theme.colors.text }}>Equipment & Machinery</Text>
+              <Text style={{ fontSize: 14, fontWeight: "600", color: "#F59E0B" }}>15%</Text>
+            </View>
+            <View style={{ height: 8, backgroundColor: theme.colors.border, borderRadius: 4, overflow: "hidden" }}>
+              <View style={{ width: "15%", height: "100%", backgroundColor: "#F59E0B", borderRadius: 4 }} />
+            </View>
+          </View>
+
+          <View style={{ marginBottom: 12 }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 6 }}>
+              <Text style={{ fontSize: 14, color: theme.colors.text }}>Engineering & Design</Text>
+              <Text style={{ fontSize: 14, fontWeight: "600", color: "#8B5CF6" }}>10%</Text>
+            </View>
+            <View style={{ height: 8, backgroundColor: theme.colors.border, borderRadius: 4, overflow: "hidden" }}>
+              <View style={{ width: "10%", height: "100%", backgroundColor: "#8B5CF6", borderRadius: 4 }} />
+            </View>
+          </View>
+
+          <View>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 6 }}>
+              <Text style={{ fontSize: 14, color: theme.colors.text }}>Contingency & Other</Text>
+              <Text style={{ fontSize: 14, fontWeight: "600", color: "#EF4444" }}>5%</Text>
+            </View>
+            <View style={{ height: 8, backgroundColor: theme.colors.border, borderRadius: 4, overflow: "hidden" }}>
+              <View style={{ width: "5%", height: "100%", backgroundColor: "#EF4444", borderRadius: 4 }} />
+            </View>
+          </View>
+
+          {/* Summary */}
+          <View style={{
+            marginTop: 20,
+            paddingTop: 16,
+            borderTopWidth: 1,
+            borderTopColor: theme.colors.border,
+          }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 8 }}>
+              <Text style={{ fontSize: 14, color: theme.colors.textSecondary }}>Total Allocated</Text>
+              <Text style={{ fontSize: 16, fontWeight: "700", color: theme.colors.text }}>{allocatedBudget}</Text>
+            </View>
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Text style={{ fontSize: 14, color: theme.colors.textSecondary }}>Remaining</Text>
+              <Text style={{ fontSize: 16, fontWeight: "700", color: "#10B981" }}>
+                {/* Calculate remaining based on spent */}
+                {(() => {
+                  const allocatedStr = Array.isArray(allocatedBudget) ? allocatedBudget[0] : allocatedBudget;
+                  const spentStr = Array.isArray(spentBudget) ? spentBudget[0] : spentBudget;
+                  const allocated = parseFloat(allocatedStr.replace(/[^0-9.]/g, ''));
+                  const spent = parseFloat(spentStr.replace(/[^0-9.]/g, ''));
+                  const remaining = allocated - spent;
+                  return `₹${remaining.toFixed(1)}M`;
+                })()}
+              </Text>
+            </View>
+          </View>
+        </View>
+
         {/* Community Comments */}
         <View
           style={{
