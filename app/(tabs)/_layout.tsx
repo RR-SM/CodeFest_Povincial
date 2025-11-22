@@ -2,7 +2,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Tabs } from "expo-router";
 import { Text, View } from "react-native";
-import {useTheme} from  "../contexts/ThemeContext"
+import { useTheme } from "../contexts/ThemeContext";
 
 const TabIcon = ({ focused, children, label }: { focused: boolean; children: React.ReactNode; label: string }) => {
   if (focused) {
@@ -88,8 +88,8 @@ export default function TabsLayout() {
           marginHorizontal: 0,
           marginBottom: 0,
           paddingTop: 8,
-          paddingBottom: 20,
-          height: 65,
+          paddingBottom: 32, // Increased padding to avoid navigation bar
+          height: 68, // Increased height
           position: "absolute",
           shadowColor: "#000",
           shadowOffset: { width: 0, height: -2 },

@@ -59,6 +59,22 @@ export default function Home() {
       stats: "12 " + t("openTenders")
     },
     {
+      title: "Transparency Reports",
+      subtitle: "Audit & Accountability",
+      icon: "shield-checkmark",
+      color: "#DC2626",
+      route: "/transparency-reports",
+      stats: "8 Reports"
+    },
+    {
+      title: "Legal Framework",
+      subtitle: "Laws & Regulations",
+      icon: "book",
+      color: "#F59E0B",
+      route: "/legal-framework",
+      stats: "View Laws"
+    },
+    {
       title: t("settings"),
       subtitle: t("appPreferences"),
       icon: "settings",
@@ -183,7 +199,7 @@ export default function Home() {
             {t("quickActions")}
           </Text>
 
-          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12 }}>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
             {shortcuts.map((shortcut, index) => (
               <TouchableOpacity
                 key={index}
@@ -193,6 +209,7 @@ export default function Home() {
                   backgroundColor: theme.colors.card,
                   borderRadius: 20,
                   padding: 20,
+                  marginBottom: 12,
                   shadowColor: theme.isDark ? "#000" : "#000",
                   shadowOffset: { width: 0, height: 4 },
                   shadowOpacity: theme.isDark ? 0.3 : 0.08,

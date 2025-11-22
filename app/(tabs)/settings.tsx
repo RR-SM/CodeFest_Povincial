@@ -64,6 +64,20 @@ export default function Settings() {
       onPress: () => {},
     },
     {
+      title: "Legal Framework",
+      subtitle: "RTI Act, Open Data Policy & more",
+      icon: "document-text",
+      type: "arrow" as const,
+      onPress: () => router.push("/legal-framework" as any),
+    },
+    {
+      title: "Transparency Reports",
+      subtitle: "Audit findings & corruption cases",
+      icon: "alert-circle",
+      type: "arrow" as const,
+      onPress: () => router.push("/transparency-reports" as any),
+    },
+    {
       title: t("about"),
       subtitle: t("aboutDesc"),
       icon: "information-circle",
